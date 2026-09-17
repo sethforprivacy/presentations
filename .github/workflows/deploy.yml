@@ -1,0 +1,108 @@
+name: Deploy decks to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build each deck workspace
+        env:
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          set -euo pipefail
+          rm -rf _site .deck-list
+          mkdir -p _site
+          : > .deck-list
+          for dir in decks/*/; do
+            deck=$(basename "$dir")
+            [ -f "$dir/package.json" ] || continue
+            slides=$(ls -d "$dir"slides/*/ 2>/dev/null | xargs -r -n1 basename | tr '\n' ' ' || true)
+            [ -n "${slides// /}" ] || { echo "::warning::no slides in $deck, skipping"; continue; }
+
+            # Inject the deploy base path (runner-local copy; repo file untouched)
+            printf "import type { OpenSlideConfig } from '@open-slide/core';\n\nconst openSlideConfig: OpenSlideConfig = { base: '/%s/%s/' };\n\nexport default openSlideConfig;\n" "$REPO" "$deck" > "$dir/open-slide.config.ts"
+
+            (cd "$dir" && npm ci --no-fund --no-audit)
+            (cd "$dir" && npm run build -- --out-dir "$GITHUB_WORKSPACE/_site/$deck")
+
+            # Materialize known routes so every deep link is a real 200
+            for s in $slides; do
+              mkdir -p "_site/$deck/s/$s"
+              cp "_site/$deck/index.html" "_site/$deck/s/$s/index.html"
+            done
+            # Last-resort fallback for unknown routes under this deck (served as 404 by Pages, still renders)
+            cp "_site/$deck/index.html" "_site/$deck/404.html"
+
+            echo "$deck|$slides" >> .deck-list
+          done
+          [ -s .deck-list ] || { echo "no buildable decks found" >&2; exit 1; }
+
+      - name: Generate site root
+        env:
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          set -euo pipefail
+          rows=""
+          while IFS='|' read -r deck slides; do
+            for s in $slides; do
+              title=$(grep -o "title: '[^']*'" "decks/$deck/slides/$s/index.tsx" | head -1 | sed "s/^title: '//;s/'$//" || true)
+              [ -n "$title" ] || title=$s
+              rows="<li><a href=\"./$deck/s/$s/\">$title</a><span>$deck</span></li>$rows"
+            done
+          done < .deck-list
+          cat > _site/index.html <<EOF
+          <!doctype html>
+          <html lang="en">
+          <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Decks — $REPO</title>
+          <style>
+            body { background: #08090a; color: #f7f8f8; font: 400 18px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+            ul { list-style: none; padding: 0; max-width: 640px; }
+            li { display: flex; justify-content: space-between; gap: 32px; padding: 14px 0; border-bottom: 1px solid #1e3a27; }
+            a { color: #4ade80; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+            span { color: #69856e; }
+            h1 { font-size: 15px; letter-spacing: .25em; color: #69856e; text-transform: uppercase; margin-bottom: 28px; }
+          </style>
+          </head>
+          <body><div><h1>Decks</h1><ul>$rows</ul></div></body>
+          </html>
+          EOF
+          printf '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=./"><title>Redirecting</title>\n' > _site/404.html
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
