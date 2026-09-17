@@ -487,25 +487,25 @@ const DividerPace: Page = () => (
 const TNode = ({
   date,
   model,
-  spec,
+  up = false,
 }: {
   date: string;
   model: string;
-  spec: string;
+  up?: boolean;
 }) => (
   <div data-slide-loc="497:2"
     style={{
       flex: '1 1 0',
-      borderLeft: `2px solid ${dim}`,
-      padding: '0 28px',
       position: 'relative',
+      padding: '0 16px',
     }}
   >
-    <div data-slide-loc="505:4"
+    <div
       style={{
         position: 'absolute',
-        top: -11,
-        left: -8,
+        left: -7,
+        top: '50%',
+        marginTop: -7,
         width: 14,
         height: 14,
         borderRadius: '50%',
@@ -513,20 +513,26 @@ const TNode = ({
         boxShadow: '0 0 12px rgba(74,222,128,0.7)',
       }}
     />
-    <div data-slide-loc="517:4" style={{ fontSize: 22, color: 'var(--osd-accent)', marginBottom: 18 }}>
-      {date}
-    </div>
-    <div data-slide-loc="520:4"
+    <div
       style={{
-        fontFamily: 'var(--osd-font-display)',
-        fontSize: 36,
-        fontWeight: 800,
-        marginBottom: 14,
+        position: 'absolute',
+        left: 16,
+        right: 4,
+        [up ? 'bottom' : 'top']: 'calc(50% + 24px)',
       }}
     >
-      {model}
+      <div style={{ fontSize: 22, color: 'var(--osd-accent)', marginBottom: 12 }}>{date}</div>
+      <div
+        style={{
+          fontFamily: 'var(--osd-font-display)',
+          fontSize: 34,
+          fontWeight: 800,
+          lineHeight: 1.2,
+        }}
+      >
+        {model}
+      </div>
     </div>
-    <div data-slide-loc="530:4" style={{ fontSize: 23, color: muted, lineHeight: 1.5 }}>{spec}</div>
   </div>
 );
 
@@ -543,25 +549,35 @@ const Timeline: Page = () => (
           margin: '28px 0 96px',
         }}
       >
-        2026, in six commits
-      </h2>
+        2026, the year of local AI</h2>
       <div data-slide-loc="549:6"
         style={{
           display: 'flex',
           gap: 0,
-          borderTop: `2px solid ${dim}`,
-          paddingTop: 0,
+          position: 'relative',
+          height: 340,
         }}
       >
-        <TNode date="JUL 31" model="V4-Flash 0731" spec="official release · vLLM, llama.cpp, MLX day-one" />
-        <TNode date="AUG 14" model="Qwen 3.8-27B" spec="dense · Apache-2.0 · 262K ctx — 2.4T-A95B Max hours from GLM-5.3" />
-        <TNode date="AUG 14" model="GLM-5.3" spec="zai-org flagship — the open drop of the day" />
-        <TNode date="AUG 26" model="GLM-5.3-Flash" spec="320B / 18B active · 1M ctx · MIT weights shipped" />
-        <TNode date="SEP" model="Qwen3.8-Flash-Next" spec="125B MoE · 1M ctx · vision — 37 tok/s on one Spark" />
-        <TNode date="SEP" model="DeepSeek-V4.1-Flash" spec="flash-line refresh — day-one engine support" />
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: '50%',
+            height: 2,
+            background: dim,
+          }}
+        />
+        <TNode date="JUL 27" model="Kimi K3" up />
+        <TNode date="JUL 31" model="Deepseek-V4-Flash" />
+        <TNode date="AUG 14" model="Qwen 3.8-27B" up />
+        <TNode date="AUG 14" model="GLM-5.3" />
+        <TNode date="AUG 26" model="GLM-5.3-Flash" up />
+        <TNode date="SEP" model="Qwen3.8-Flash-Next" />
+        <TNode date="SEP" model="DeepSeek-V4.1-Flash" up />
       </div>
     </div>
-    <Source>HF model cards: deepseek-ai · Qwen · zai-org · epoch.ai/models</Source>
+    <Source>HF model cards: moonshotai · deepseek-ai · Qwen · zai-org · epoch.ai/models</Source>
   </Shell>
 );
 
@@ -590,7 +606,7 @@ const PacePoint: Page = () => (
           maxWidth: 1560,
         }}
       >
-        Six frontier-grade open releases in{' '}
+        Seven frontier-grade open releases in{' '}
         <span data-slide-loc="595:8" style={{ color: 'var(--osd-accent)' }}>six months.</span>
       </h2>
       <Cmd>
@@ -762,7 +778,7 @@ const TierMacbook: Page = () => (
     speed={61.6}
     speedDecimals={1}
     note="Frontier-class coding and vision in a machine that fits a backpack. No CUDA, no daemon, no datacenter. The engine, not the silicon, moved: 1.7× on the same laptop."
-    source="oMLX M5 Max (40c) 4-bit + MTP k=3: 61.6 · AWQ 5bpw: 59.4 · 5-bit no-MTP: 35.5 tok/s"
+    source="MLX M5 Max (40c) 4-bit + MTP k=3: 61.6 · AWQ 5bpw: 59.4 · 5-bit no-MTP: 35.5 tok/s"
   />
 );
 
