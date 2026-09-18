@@ -81,7 +81,7 @@ const Footer = () => {
         letterSpacing: '0.08em',
       }}
     >
-      <span data-slide-loc="84:6">local-ai --status ok</span>
+      <span data-slide-loc="84:6">GFTS 2026 | @sethforprivacy</span>
       <span data-slide-loc="85:6">
         {String(current).padStart(2, '0')} / {String(total).padStart(2, '0')}
       </span>
@@ -237,27 +237,6 @@ const Cover: Page = () => (
   </Shell>
 );
 
-Cover.transition = {
-  duration: 280,
-  exit: {
-    duration: 160,
-    easing: EASE_IN,
-    keyframes: [
-      { opacity: 1, transform: 'translateY(0)' },
-      { opacity: 0, transform: 'translateY(-6px)' },
-    ],
-  },
-  enter: {
-    duration: 280,
-    delay: 100,
-    easing: EASE_OUT,
-    keyframes: [
-      { opacity: 0, transform: 'translateY(12px)', filter: 'blur(4px)' },
-      { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' },
-    ],
-  },
-};
-
 // ——— 2 · they're asking to slow down ———————————————————————————————
 
 const Pacing: Page = () => (
@@ -270,7 +249,6 @@ const Pacing: Page = () => (
         top: 120,
       }}
     >
-      <Eyebrow>01 · the ask</Eyebrow>
       <h2 data-slide-loc="274:6"
         style={{
           fontFamily: 'var(--osd-font-display)',
@@ -289,7 +267,7 @@ const Pacing: Page = () => (
           <b data-slide-loc="289:10" style={bStyle}>1,386 employees</b> sign “Pacing the Frontier” — coordinated pause
         </Bullet>
         <Bullet>
-          <b data-slide-loc="292:10" style={bStyle}>Amodei’s 3-step plan</b> — norms, audits, global regulation
+          <b data-slide-loc="292:10" style={bStyle}>Amodei’s 3-step plan</b> — auditors first, then coordination
         </Bullet>
         <Bullet>
           <b style={bStyle}>From</b> OpenAI · Anthropic · Google DeepMind · Meta
@@ -300,7 +278,7 @@ const Pacing: Page = () => (
         </Bullet>
       </div>
     </div>
-    <Source>pacingthefrontier.com · darioamodei.com “We Must Pace the Frontier” · Sept 2026</Source>
+    <Source>Pacing the Frontier (Jul 2026, 1,386 signatories) · darioamodei.com “We Must Pace the Frontier” (Sep 2026)</Source>
   </Shell>
 );
 
@@ -353,7 +331,6 @@ const Stat = ({ n, label }: { n: string; label: string }) => (
 const PlanDecline: Page = () => (
   <Shell>
     <div data-slide-loc="356:4" style={{ position: 'absolute', left: 120, right: 120, top: 120 }}>
-      <Eyebrow>01 · the catch</Eyebrow>
       <h2 data-slide-loc="358:6"
         style={{
           fontFamily: 'var(--osd-font-display)',
@@ -381,7 +358,7 @@ const PlanDecline: Page = () => (
       </div>
     </div>
     <Source>
-      anthropics/claude-code issues #11810 · #65678 · #87419 · community.openai.com Codex threads
+      anthropics/claude-code issues #11810 / #65678 / #87419 · community.openai.com Codex threads 1388643 / 1378553 · retrieved 2026-09-17
     </Source>
   </Shell>
 );
@@ -424,7 +401,6 @@ const Thesis: Page = () => (
         padding: '0 160px',
       }}
     >
-      <Eyebrow>02 · the thesis</Eyebrow>
       <ThesisWord word="UNSTOPPABLE" gloss="weights don’t answer to a pause" />
       <ThesisWord word="UNLIMITED" gloss="no begging on X for limit resets" />
       <ThesisWord word="ALIGNED" gloss="a model that answers to you, not to a ToS" />
@@ -478,7 +454,7 @@ const DividerPace: Page = () => (
   <Divider
     cmd="cd ~/local && git log --oneline 2026"
     big={<>The <span data-slide-loc="481:15" style={{ color: 'var(--osd-accent)' }}>pace</span></>}
-    note={<>Six months of open-weight releases. Nobody asked permission.</>}
+    note={<>Six weeks of open-weight releases. Nobody asked permission.</>}
   />
 );
 
@@ -488,12 +464,35 @@ const TNode = ({
   date,
   model,
   up = false,
+  i,
 }: {
   date: string;
   model: string;
   up?: boolean;
-}) => (
-  <div data-slide-loc="497:2"
+  i: number;
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const animate = useIsActivePage();
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!animate || reduced()) {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      return;
+    }
+    el.style.opacity = '0';
+    const anim = el.animate(
+      [
+        { opacity: 0, transform: 'translateY(10px)' },
+        { opacity: 1, transform: 'translateY(0)' },
+      ],
+      { duration: 420, delay: 200 + i * 300, easing: EASE_OUT, fill: 'both' },
+    );
+    return () => anim.cancel();
+  }, [animate, i]);
+  return (
+  <div data-slide-loc="497:2" ref={ref}
     style={{
       flex: '1 1 0',
       position: 'relative',
@@ -534,12 +533,46 @@ const TNode = ({
       </div>
     </div>
   </div>
-);
+  );
+};
+
+// The rail the nodes sit on: drawn left-to-right so the timeline reads oldest → newest.
+const TimelineRule = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const animate = useIsActivePage();
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!animate || reduced()) {
+      el.style.transform = 'none';
+      return;
+    }
+    const anim = el.animate(
+      [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
+      { duration: 2200, delay: 160, easing: EASE_OUT, fill: 'both' },
+    );
+    return () => anim.cancel();
+  }, [animate]);
+  return (
+    <div
+      ref={ref}
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: '50%',
+        height: 2,
+        background: dim,
+        transformOrigin: 'left center',
+      }}
+    />
+  );
+};
+
 
 const Timeline: Page = () => (
   <Shell>
     <div data-slide-loc="536:4" style={{ position: 'absolute', left: 120, right: 120, top: 120 }}>
-      <Eyebrow>02 · release log</Eyebrow>
       <h2 data-slide-loc="538:6"
         style={{
           fontFamily: 'var(--osd-font-display)',
@@ -558,27 +591,45 @@ const Timeline: Page = () => (
           height: 340,
         }}
       >
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: '50%',
-            height: 2,
-            background: dim,
-          }}
-        />
-        <TNode date="JUL 27" model="Kimi K3" up />
-        <TNode date="JUL 31" model="Deepseek-V4-Flash" />
-        <TNode date="AUG 14" model="Qwen 3.8-27B" up />
-        <TNode date="AUG 14" model="GLM-5.3" />
-        <TNode date="AUG 26" model="GLM-5.3-Flash" up />
-        <TNode date="SEP" model="Qwen3.8-Flash-Next" />
-        <TNode date="SEP" model="DeepSeek-V4.1-Flash" up />
+        <TimelineRule />
+        <TNode i={0} date="JUL 27" model="Kimi K3" up />
+        <TNode i={1} date="JUL 31" model="DeepSeek V4 Flash" />
+        <TNode i={2} date="AUG 14" model="Qwen 3.8 27B" up />
+        <TNode i={3} date="AUG 14" model="GLM 5.3" />
+        <TNode i={4} date="AUG 26" model="GLM 5.3 Flash" up />
+        <TNode i={5} date="AUG 26" model="Qwen 3.8 Flash Next" />
+        <TNode i={6} date="SEP 10" model="DeepSeek V4.1 Flash" up />
       </div>
     </div>
-    <Source>HF model cards: moonshotai · deepseek-ai · Qwen · zai-org · epoch.ai/models</Source>
+    <Source>HF model cards: moonshotai · deepseek-ai · Qwen · zai-org · epoch.ai/models · dated 2026-09-17</Source>
   </Shell>
+);
+
+const LagChip = ({ value, label }: { value: string; label: string }) => (
+  <div
+    style={{
+      background: panel,
+      border: `1px solid ${dim}`,
+      borderRadius: 'var(--osd-radius)',
+      padding: '22px 30px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 10,
+    }}
+  >
+    <span
+      style={{
+        fontFamily: 'var(--osd-font-display)',
+        fontSize: 44,
+        fontWeight: 900,
+        lineHeight: 1.1,
+        color: 'var(--osd-accent)',
+      }}
+    >
+      {value}
+    </span>
+    <span style={{ fontSize: 24, color: muted }}>{label}</span>
+  </div>
 );
 
 // ——— 7 · the point of the pace —————————————————————————————————————
@@ -595,24 +646,132 @@ const PacePoint: Page = () => (
         padding: '0 160px',
       }}
     >
-      <Eyebrow>02 · why it matters</Eyebrow>
       <h2 data-slide-loc="584:6"
         style={{
           fontFamily: 'var(--osd-font-display)',
           fontSize: 96,
           fontWeight: 900,
           lineHeight: 1.25,
-          margin: '36px 0 56px',
+          margin: '36px 0 44px',
           maxWidth: 1560,
         }}
       >
         Seven frontier-grade open releases in{' '}
-        <span data-slide-loc="595:8" style={{ color: 'var(--osd-accent)' }}>six months.</span>
+        <span data-slide-loc="595:8" style={{ color: 'var(--osd-accent)' }}>six weeks.</span>
       </h2>
-      <Cmd>
-        You can’t pace what already shipped.<Cursor />
-      </Cmd>
+      <div style={{ maxWidth: 1680 }}>
+        <div style={{ fontSize: 22, color: muted, letterSpacing: '0.08em', marginBottom: 18 }}>
+          weights published → serving, on hardware you own
+        </div>
+        <div style={{ display: 'flex', gap: 24 }}>
+          <LagChip value="9 h 41 m" label="GLM-5.3-Flash NVFP4" />
+          <LagChip value="16 h" label="DeepSeek-V4.1-Flash" />
+          <LagChip value="same day" label="Qwen3.8-Flash-Next" />
+        </div>
+      </div>
+      <div style={{ marginTop: 44 }}>
+        <Cmd>
+          You can’t pace what already shipped.<Cursor />
+        </Cmd>
+      </div>
     </div>
+  </Shell>
+);
+
+const LicenceRow = ({
+  model,
+  licence,
+  osi,
+  note,
+}: {
+  model: string;
+  licence: string;
+  osi: boolean;
+  note: string;
+}) => (
+  <div
+    style={{
+      display: 'grid',
+      gridTemplateColumns: '440px 300px 1fr',
+      alignItems: 'center',
+      gap: 24,
+      padding: '16px 28px',
+      background: panel,
+      border: `1px solid ${dim}`,
+      borderLeft: `3px solid ${osi ? 'var(--osd-accent)' : amber}`,
+      borderRadius: 'var(--osd-radius)',
+    }}
+  >
+    <span
+      style={{
+        fontFamily: 'var(--osd-font-display)',
+        fontSize: 32,
+        fontWeight: 800,
+        color: 'var(--osd-text)',
+      }}
+    >
+      {model}
+    </span>
+    <span style={{ fontSize: 26, color: osi ? 'var(--osd-accent)' : amber }}>
+      {licence}
+    </span>
+    <span style={{ fontSize: 26, color: muted }}>{note}</span>
+  </div>
+);
+
+const Licensing: Page = () => (
+  <Shell>
+    <div style={{ position: 'absolute', left: 120, right: 120, top: 120 }}>
+      <h2
+        style={{
+          fontFamily: 'var(--osd-font-display)',
+          fontSize: 72,
+          fontWeight: 900,
+          lineHeight: 1.2,
+          margin: '28px 0 34px',
+        }}
+      >
+        Open weights
+        <br />
+        <span style={{ color: amber }}>≠ open source.</span>
+      </h2>
+      <p style={{ fontSize: 28, color: muted, margin: '0 0 44px', lineHeight: 1.5 }}>
+        Downloadable is not the same as free to use.
+      </p>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <LicenceRow
+          model="Qwen3.8-27B"
+          licence="Apache-2.0"
+          osi
+          note="OSI-approved — take it, ship it, sell it"
+        />
+        <LicenceRow
+          model="GLM-5.3-Flash"
+          licence="MIT"
+          osi
+          note="OSI-approved — the Flash tier is the freer one"
+        />
+        <LicenceRow
+          model="DeepSeek-V4.1-Flash"
+          licence="MIT"
+          osi
+          note="OSI-approved — same terms"
+        />
+        <LicenceRow
+          model="GLM-5.3"
+          licence="custom “glm-5.3”"
+          osi={false}
+          note="not OSI — MaaS over $10B/yr needs Z.ai’s review"
+        />
+        <LicenceRow
+          model="Kimi K3"
+          licence="custom “Kimi K3”"
+          osi={false}
+          note="not OSI — MaaS over $20M/yr needs a separate deal"
+        />
+      </div>
+    </div>
+    <Source>HF LICENSE files: zai-org · moonshotai · Qwen · deepseek-ai · retrieved 2026-09-17</Source>
   </Shell>
 );
 
@@ -622,7 +781,7 @@ const DividerHw: Page = () => (
   <Divider
     cmd="lsblk --tiers"
     big={<>Pick your <span data-slide-loc="609:21" style={{ color: 'var(--osd-accent)' }}>machine</span></>}
-    note={<>Five tiers, one model each. Measured in tokens/s — single-stream decode, 2026 community benchmarks.</>}
+    note={<>Five tiers, two models. Measured in tokens/s — single-stream decode, 2026 community benchmarks.</>}
   />
 );
 
@@ -695,7 +854,6 @@ const Stream = ({ tps }: { tps: number }) => {
 // ——— 9–13 · tier pages ————————————————————————————————————————————
 
 const TierBody = ({
-  n,
   machine,
   model,
   equiv,
@@ -704,7 +862,6 @@ const TierBody = ({
   note,
   source,
 }: {
-  n: string;
   machine: string;
   model: string;
   equiv: string;
@@ -715,9 +872,6 @@ const TierBody = ({
 }) => (
   <Shell>
     <div data-slide-loc="700:4" style={{ position: 'absolute', left: 120, right: 120, top: 112 }}>
-      <div data-slide-loc="701:6" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <Eyebrow>03 · tier {n}</Eyebrow>
-      </div>
       <MorphElement id="tier-machine">
         <h2 data-slide-loc="709:8"
           style={{
@@ -771,64 +925,59 @@ const TIER_MORPH: SlideTransition = {
 
 const TierMacbook: Page = () => (
   <TierBody
-    n="01"
     machine="MacBook Pro · M5 Max, 64 GB"
     model="Qwen 3.8-27B"
     equiv="Opus 4.6"
     speed={61.6}
     speedDecimals={1}
-    note="Frontier-class coding and vision in a machine that fits a backpack. No CUDA, no daemon, no datacenter. The engine, not the silicon, moved: 1.7× on the same laptop."
-    source="MLX M5 Max (40c) 4-bit + MTP k=3: 61.6 · AWQ 5bpw: 59.4 · 5-bit no-MTP: 35.5 tok/s"
+    note="Frontier-class coding and vision in a machine that fits a backpack. No CUDA, no daemon, no datacenter. Same weights, one runtime change: multi-token prediction takes bf16 from 9.3 to 25.9 tok/s."
+    source={<>MLX/MLXFast on M5 Max (40c), 128 GB — bf16 + MTP: 25.9 (9.3 without) · 4-bit + MTP k=3: 61.6 tok/s<br />Qwen3.8-27B beats Opus 4.6 Max on SWE-bench Pro 61.7 and OSWorld-Verified 84.3 · retrieved 2026-09-17</>}
   />
 );
 
 const Tier3090: Page = () => (
   <TierBody
-    n="02"
     machine="RTX 3090 · 24 GB"
     model="Qwen 3.8-27B"
     equiv="Opus 4.6"
     speed={138}
-    note="A five-year-old used card, still the community’s benchmark box. August’s EXL3/W4A16 + DFlash2 kits rewrote the 24 GB recipe: 133–138 tok/s chat, 942 aggregate ×64 — no offload."
-    source="github.com/MiaAI-Lab EXL3+DFlash2 kit · 3090 stacks — 133–138 tok/s single-stream, 942 at 64-way"
+    note="A six-year-old used card, still the community’s benchmark box. August’s EXL3/W4A16 + DFlash2 kits rewrote the 24 GB recipe: 133–138 tok/s single-stream on reproduction-heavy prompts, 942 aggregate ×64 — no offload."
+    source="MiaAI-Lab EXL3 kit · 3090 stacks — 133–138 tok/s single-stream, 942 end-to-end at 64 concurrent × 128 in / 512 out · retrieved 2026-09-17"
   />
 );
 
 const TierSpark: Page = () => (
   <TierBody
-    n="03"
     machine="2× DGX Spark · 256 GB"
     model="GLM-5.3-Flash 320B"
     equiv="Opus 4.8"
     speed={62.9}
     speedDecimals={1}
-    note="12× the 3090’s model at the same token speed: 62.9 tok/s structured, 32 prose, 146 aggregate at 4 streams, on a 1M-token context — a team endpoint on two desk tiles."
-    source="github.com/MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks — 62.9 tok/s ×1 · 146.5 agg ×4 · 1.75M-token KV pool (2026-08-28)"
+    note="12× the 3090’s model, on two desk tiles instead of one card: 62.9 tok/s structured, 32 on prose, 146 aggregate at 4 streams, with a 1.75M-token KV pool."
+    source={<>github.com/MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks (2026-08-28) — 62.9 tok/s ×1 · 146.5 agg ×4<br />321B MoE; Artificial Analysis Intelligence Index 57 — level with Opus 4.8 · retrieved 2026-09-17</>}
   />
 );
 
 const TierStudio: Page = () => (
   <TierBody
-    n="04"
     machine="Mac Studio Ultra · 256 GB"
     model="GLM-5.3-Flash 320B"
     equiv="Opus 4.8"
     speed={51}
-    note="819 GB/s of bandwidth does the speculation heavy lifting: 25–32 tok/s plain, 51 with a drafter. Slow prefill is the tax."
-    source="llmcheck.net M3/M4 Ultra 25–32 · hf.co/grant-ai MLX-4bit DFlash2: 51.2 tok/s"
+    note="Sparse MoE does the heavy lifting — 321B of weights, 18B read per token. 25–32 tok/s plain, 51 with a drafter. Slow prefill is the tax."
+    source="llmcheck.net M3/M4 Ultra 25–32 · hf.co/grant-ai MLX-4bit + DFlash2 on M3 Ultra: 51.2 tok/s · retrieved 2026-09-17"
   />
 );
 
 const Tier6000: Page = () => (
   <TierBody
-    n="05"
     machine="2× RTX PRO 6000 · 192 GB"
     model="GLM-5.3-Flash 320B"
     equiv="Opus 4.8"
     speed={145.5}
     speedDecimals={1}
-    note="Nothing offloaded. 6.2K tok/s cold prefill, 262K context, 5/5 GSM8K drafter acceptance. The single-user endgame."
-    source="hf.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw — 145.5 tok/s C1 decode, receipts in repo"
+    note="Nothing offloaded. 6.2K tok/s cold prefill at 32–64K, 5/5 GSM8K drafter acceptance. The single-user endgame."
+    source={<>hf.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw — 2× RTX PRO 6000 96 GB<br />145.5 tok/s C1 decode · 6,225 tok/s cold prefill at 32K · DFlash2 5/5 GSM8K correct · retrieved 2026-09-17</>}
   />
 );
 
@@ -912,6 +1061,7 @@ export default [
   DividerPace,
   Timeline,
   PacePoint,
+  Licensing,
   DividerHw,
   TierMacbook,
   Tier3090,
