@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { DesignSystem, Page, SlideMeta, SlideTransition } from '@open-slide/core';
-import { MorphElement, useIsActivePage, useSlidePageNumber } from '@open-slide/core';
+import { useIsActivePage, useSlidePageNumber } from '@open-slide/core';
 
 export const design: DesignSystem = {
   palette: { bg: '#0a0d0a', text: '#e8f2e4', accent: '#4ade80' },
@@ -872,19 +872,17 @@ const TierBody = ({
 }) => (
   <Shell>
     <div data-slide-loc="700:4" style={{ position: 'absolute', left: 120, right: 120, top: 112 }}>
-      <MorphElement id="tier-machine">
-        <h2 data-slide-loc="709:8"
-          style={{
-            fontFamily: 'var(--osd-font-display)',
-            fontSize: 72,
-            fontWeight: 900,
-            lineHeight: 1.18,
-            margin: '22px 0 44px',
-          }}
-        >
-          {machine}
-        </h2>
-      </MorphElement>
+      <h2 data-slide-loc="709:8"
+        style={{
+          fontFamily: 'var(--osd-font-display)',
+          fontSize: 72,
+          fontWeight: 900,
+          lineHeight: 1.18,
+          margin: '22px 0 44px',
+        }}
+      >
+        {machine}
+      </h2>
       <div data-slide-loc="721:6" style={{ display: 'flex', alignItems: 'baseline', gap: 26, marginBottom: 28 }}>
         <CountUp
           value={speed}
@@ -916,11 +914,10 @@ const TierBody = ({
   </Shell>
 );
 
-const TIER_MORPH: SlideTransition = {
+const TIER_FADE: SlideTransition = {
   duration: 280,
   exit: { duration: 224, easing: EASE_IN, keyframes: [{ opacity: 1 }, { opacity: 0 }] },
   enter: { duration: 308, delay: 112, easing: EASE_OUT, keyframes: [{ opacity: 0 }, { opacity: 1 }] },
-  morph: { duration: 868, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' },
 };
 
 const TierMacbook: Page = () => (
@@ -931,7 +928,7 @@ const TierMacbook: Page = () => (
     speed={61.6}
     speedDecimals={1}
     note="Frontier-class coding and vision in a machine that fits a backpack. No CUDA, no daemon, no datacenter. Same weights, one runtime change: multi-token prediction takes bf16 from 9.3 to 25.9 tok/s."
-    source={<>MLX/MLXFast on M5 Max (40c), 128 GB — bf16 + MTP: 25.9 (9.3 without) · 4-bit + MTP k=3: 61.6 tok/s<br />Qwen3.8-27B beats Opus 4.6 Max on SWE-bench Pro 61.7 and OSWorld-Verified 84.3 · retrieved 2026-09-17</>}
+    source="MLX/MLXFast on M5 Max (40c), 128 GB · retrieved 2026-09-17"
   />
 );
 
@@ -942,7 +939,7 @@ const Tier3090: Page = () => (
     equiv="Opus 4.6"
     speed={138}
     note="A six-year-old used card, still the community’s benchmark box. August’s EXL3/W4A16 + DFlash2 kits rewrote the 24 GB recipe: 133–138 tok/s single-stream on reproduction-heavy prompts, 942 aggregate ×64 — no offload."
-    source="MiaAI-Lab EXL3 kit · 3090 stacks — 133–138 tok/s single-stream, 942 end-to-end at 64 concurrent × 128 in / 512 out · retrieved 2026-09-17"
+    source="MiaAI-Lab EXL3 kit · 3090 stacks · retrieved 2026-09-17"
   />
 );
 
@@ -954,7 +951,7 @@ const TierSpark: Page = () => (
     speed={62.9}
     speedDecimals={1}
     note="12× the 3090’s model, on two desk tiles instead of one card: 62.9 tok/s structured, 32 on prose, 146 aggregate at 4 streams, with a 1.75M-token KV pool."
-    source={<>github.com/MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks (2026-08-28) — 62.9 tok/s ×1 · 146.5 agg ×4<br />321B MoE; Artificial Analysis Intelligence Index 57 — level with Opus 4.8 · retrieved 2026-09-17</>}
+    source="github.com/MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks (2026-08-28) · retrieved 2026-09-17"
   />
 );
 
@@ -965,7 +962,7 @@ const TierStudio: Page = () => (
     equiv="Opus 4.8"
     speed={51}
     note="Sparse MoE does the heavy lifting — 321B of weights, 18B read per token. 25–32 tok/s plain, 51 with a drafter. Slow prefill is the tax."
-    source="llmcheck.net M3/M4 Ultra 25–32 · hf.co/grant-ai MLX-4bit + DFlash2 on M3 Ultra: 51.2 tok/s · retrieved 2026-09-17"
+    source="llmcheck.net · hf.co/grant-ai · retrieved 2026-09-17"
   />
 );
 
@@ -977,15 +974,15 @@ const Tier6000: Page = () => (
     speed={145.5}
     speedDecimals={1}
     note="Nothing offloaded. 6.2K tok/s cold prefill at 32–64K, 5/5 GSM8K drafter acceptance. The single-user endgame."
-    source={<>hf.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw — 2× RTX PRO 6000 96 GB<br />145.5 tok/s C1 decode · 6,225 tok/s cold prefill at 32K · DFlash2 5/5 GSM8K correct · retrieved 2026-09-17</>}
+    source="hf.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw · retrieved 2026-09-17"
   />
 );
 
-TierMacbook.transition = TIER_MORPH;
-Tier3090.transition = TIER_MORPH;
-TierSpark.transition = TIER_MORPH;
-TierStudio.transition = TIER_MORPH;
-Tier6000.transition = TIER_MORPH;
+TierMacbook.transition = TIER_FADE;
+Tier3090.transition = TIER_FADE;
+TierSpark.transition = TIER_FADE;
+TierStudio.transition = TIER_FADE;
+Tier6000.transition = TIER_FADE;
 
 // ——— 14 · closing —————————————————————————————————————————————————
 
