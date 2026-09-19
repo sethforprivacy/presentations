@@ -664,7 +664,6 @@ const PacePoint: Page = () => (
           weights published → serving, on hardware you own
         </div>
         <div style={{ display: 'flex', gap: 24 }}>
-          {/* @slide-comment id="c-cd394515" ts="2026-09-19T03:59:13.086Z" text="eyJub3RlIjoiSXMgdGhpcyBzdHJlYW1pbmcgYXQgdGhlIG5ldyA3NHRvay9zPyJ9" */}
           <LagChip value="9 h 41 m" label="GLM-5.3-Flash NVFP4" />
           <LagChip value="16 h" label="DeepSeek-V4.1-Flash" />
           <LagChip value="same day" label="Qwen3.8-Flash-Next" />
@@ -927,7 +926,7 @@ const TierMacbook: Page = () => (
     model="Qwen 3.8-27B"
     equiv="Opus 4.6"
     speed={74}
-    note="Frontier-class coding and vision in a machine that fits a backpack. No CUDA, no daemon, no datacenter. Splash ships Metal kernels compiled for this model and a DFlash 2 draft trained for it — 282 ms to first token on a cached 32K context."
+    note="Frontier-class coding and vision in a machine that fits a backpack. No CUDA, no daemon, no datacenter."
     source="Splash 1.0 SPEED-Bench (incoai) on M5 Pro (16c), 48 GB · retrieved 2026-09-18"
   />
 );
@@ -938,7 +937,7 @@ const Tier3090: Page = () => (
     model="Qwen 3.8-27B"
     equiv="Opus 4.6"
     speed={138}
-    note="A six-year-old used card, still the community’s benchmark box. August’s EXL3/W4A16 + DFlash2 kits rewrote the 24 GB recipe: 133–138 tok/s single-stream on reproduction-heavy prompts, 942 aggregate ×64 — no offload."
+    note="A six-year-old used card, still the community’s benchmark box."
     source="MiaAI-Lab EXL3 kit · 3090 stacks · retrieved 2026-09-17"
   />
 );
@@ -950,7 +949,7 @@ const TierSpark: Page = () => (
     equiv="Opus 4.8"
     speed={62.9}
     speedDecimals={1}
-    note="12× the 3090’s model, on two desk tiles instead of one card: 62.9 tok/s structured, 32 on prose, 146 aggregate at 4 streams, with a 1.75M-token KV pool."
+    note="Twelve times the model on two desk tiles instead of one card. Intelligence that used to need a rack now sits beside your keyboard."
     source="github.com/MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks (2026-08-28) · retrieved 2026-09-17"
   />
 );
@@ -961,7 +960,7 @@ const TierStudio: Page = () => (
     model="GLM-5.3-Flash 320B"
     equiv="Opus 4.8"
     speed={51}
-    note="Sparse MoE does the heavy lifting — 321B of weights, 18B read per token. 25–32 tok/s plain, 51 with a drafter. Slow prefill is the tax."
+    note="All of it in a single Mac — no second box, no rack. Sparse weights do the heavy lifting; slow prefill is the tax."
     source="llmcheck.net · hf.co/grant-ai · retrieved 2026-09-17"
   />
 );
@@ -973,7 +972,7 @@ const Tier6000: Page = () => (
     equiv="Opus 4.8"
     speed={145.5}
     speedDecimals={1}
-    note="Nothing offloaded. 6.2K tok/s cold prefill at 32–64K, 5/5 GSM8K drafter acceptance. The single-user endgame."
+    note="Nothing offloaded, nothing throttled. The highest end of local AI — faster than the frontier API it replaces."
     source="hf.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw · retrieved 2026-09-17"
   />
 );
