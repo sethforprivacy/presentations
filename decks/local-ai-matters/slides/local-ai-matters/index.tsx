@@ -664,6 +664,7 @@ const PacePoint: Page = () => (
           weights published → serving, on hardware you own
         </div>
         <div style={{ display: 'flex', gap: 24 }}>
+          {/* @slide-comment id="c-cd394515" ts="2026-09-19T03:59:13.086Z" text="eyJub3RlIjoiSXMgdGhpcyBzdHJlYW1pbmcgYXQgdGhlIG5ldyA3NHRvay9zPyJ9" */}
           <LagChip value="9 h 41 m" label="GLM-5.3-Flash NVFP4" />
           <LagChip value="16 h" label="DeepSeek-V4.1-Flash" />
           <LagChip value="same day" label="Qwen3.8-Flash-Next" />
@@ -922,13 +923,12 @@ const TIER_FADE: SlideTransition = {
 
 const TierMacbook: Page = () => (
   <TierBody
-    machine="MacBook Pro · M5 Max, 64 GB"
+    machine="MacBook Pro · M5 Pro, 48 GB"
     model="Qwen 3.8-27B"
     equiv="Opus 4.6"
-    speed={61.6}
-    speedDecimals={1}
-    note="Frontier-class coding and vision in a machine that fits a backpack. No CUDA, no daemon, no datacenter. Same weights, one runtime change: multi-token prediction takes bf16 from 9.3 to 25.9 tok/s."
-    source="MLX/MLXFast on M5 Max (40c), 128 GB · retrieved 2026-09-17"
+    speed={74}
+    note="Frontier-class coding and vision in a machine that fits a backpack. No CUDA, no daemon, no datacenter. Splash ships Metal kernels compiled for this model and a DFlash 2 draft trained for it — 282 ms to first token on a cached 32K context."
+    source="Splash 1.0 SPEED-Bench (incoai) on M5 Pro (16c), 48 GB · retrieved 2026-09-18"
   />
 );
 
@@ -1012,12 +1012,17 @@ const Closing: Page = () => (
         <span data-slide-loc="847:8" style={{ color: 'var(--osd-accent)' }}>freedom tech.</span>
       </h2>
       <div data-slide-loc="849:6" style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
-        <Cmd>ollama run qwen3.8:27b-mlx</Cmd>
+        <Cmd>
+          splash serve --model incoai/Qwen3.8-27B-Splash
+        </Cmd>
         <p data-slide-loc="851:8" style={{ fontSize: 30, color: muted, margin: 0, lineHeight: 1.55 }}>
           One 27B model, on the laptop you already own. Start this week.
           <Cursor />
         </p>
       </div>
+      <Source>
+        github.com/incoai/splash · retrieved 2026-09-18
+      </Source>
     </div>
   </Shell>
 );
