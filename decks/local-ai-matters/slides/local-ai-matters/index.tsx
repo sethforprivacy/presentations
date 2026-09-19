@@ -799,22 +799,28 @@ const Stream = ({ tps }: { tps: number }) => {
       el.textContent = text;
       return;
     }
-    let i = 0;
-    let timer = 0;
-    const step = () => {
-      el.textContent = text.slice(0, i);
-      if (i <= text.length) {
-        i += 1;
-        timer = window.setTimeout(step, 1000 / tps);
-      } else {
-        timer = window.setTimeout(() => {
-          i = 0;
-          step();
-        }, 2800);
+    // Derive the visible character count from elapsed time, never from
+    // accumulated per-step delays: setTimeout(1000 / tps) fires late and the
+    // lateness compounds, so the old chain drifted to ~50 tok/s whatever the
+    // tier claimed. Past 60 tok/s a tier renders several characters per frame,
+    // so it is the average rate that has to hold, not each step.
+    const total = text.length;
+    const typeMs = (total / tps) * 1000;
+    const cycleMs = typeMs + 2800;
+    let shown = -1;
+    let raf = 0;
+    const start = performance.now();
+    const frame = (now: number) => {
+      const phase = (now - start) % cycleMs;
+      const next = phase >= typeMs ? total : Math.min(total, Math.floor((phase * tps) / 1000));
+      if (next !== shown) {
+        shown = next;
+        el.textContent = text.slice(0, next);
       }
+      raf = requestAnimationFrame(frame);
     };
-    step();
-    return () => window.clearTimeout(timer);
+    raf = requestAnimationFrame(frame);
+    return () => cancelAnimationFrame(raf);
   }, [tps, animate]);
   return (
     <div data-slide-loc="646:4"
