@@ -356,9 +356,28 @@ const PlanDecline: Page = () => (
         <Stat n="1.7–5×" label="faster quota burn after the Aug 17 reset" />
         <Stat n="~5 h" label="a Codex plan’s whole weekly allowance, gone" />
       </div>
+      <div
+        style={{
+          marginTop: 24,
+          borderLeft: `4px solid ${amber}`,
+          paddingLeft: 32,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 10,
+        }}
+      >
+        <span style={{ fontSize: 28, lineHeight: 1.4, color: amber }}>
+          “the token rug pull is coming. Get ready to pay up.”
+          <span style={{ color: muted }}> — @SimonHoiberg</span>
+        </span>
+        <span style={{ fontSize: 25, lineHeight: 1.4, color: muted }}>
+          his own tracking: ~18% fewer tokens, same effort — limits draining
+          4.8–5.9× faster than 2 months ago
+        </span>
+      </div>
     </div>
     <Source>
-      anthropics/claude-code issues #11810 / #65678 / #87419 · community.openai.com Codex threads 1388643 / 1378553 · retrieved 2026-09-17
+      anthropics/claude-code issues #11810 / #65678 / #87419 · community.openai.com Codex threads 1388643 / 1378553 · x.com/SimonHoiberg “token rug pull” post · retrieved 2026-09-20
     </Source>
   </Shell>
 );
@@ -401,6 +420,7 @@ const Thesis: Page = () => (
         padding: '0 160px',
       }}
     >
+      <Eyebrow>The point</Eyebrow>
       <ThesisWord word="UNSTOPPABLE" gloss="weights don’t answer to a pause" />
       <ThesisWord word="UNLIMITED" gloss="no begging on X for limit resets" />
       <ThesisWord word="ALIGNED" gloss="a model that answers to you, not to a ToS" />
