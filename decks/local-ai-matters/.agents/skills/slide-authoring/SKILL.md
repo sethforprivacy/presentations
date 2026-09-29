@@ -1,6 +1,6 @@
 ---
 name: slide-authoring
-description: Technical reference for writing or editing open-slide pages — file contract, 1920×1080 canvas, type scale, layout, palette/visual direction, assets, stepped reveals, page transitions, and morph transitions. Consult this whenever you are about to write or modify any file under `slides/<id>/`, including from inside the `create-slide` or `apply-comments` workflows, or for any ad-hoc slide edit. Triggers on phrases like "edit slide", "tweak this page", "fix the layout", "change the palette", "reveal one by one", "add a transition", "morph transition", "investigate the slide framework", "how do slides work here".
+description: Technical reference for writing or editing open-slide pages — file contract, 1920×1080 canvas, type scale, layout, palette/visual direction, assets, speaker notes, stepped reveals, page transitions, and morph transitions. Consult this whenever you are about to write or modify any file under `slides/<id>/`, including from inside the `create-slide` or `apply-comments` workflows, or for any ad-hoc slide edit. Triggers on phrases like "edit slide", "tweak this page", "fix the layout", "change the palette", "reveal one by one", "add a transition", "morph transition", "write the speaker notes", "generate the script / talk track", "investigate the slide framework", "how do slides work here".
 ---
 
 # Authoring open-slide pages
@@ -34,7 +34,7 @@ Each framework primitive has a full reference file under `references/` in this s
 - Entry is `slides/<id>/index.tsx`. Images/videos/fonts go under `slides/<id>/assets/`.
 - Do **not** touch `package.json`, `open-slide.config.ts`, or other slides.
 - Do not add dependencies. Only `react`, `@open-slide/core`, and standard web APIs are available.
-- A slide is **one `index.tsx` plus `assets/`** — nothing else. Do not create sibling `.tsx`/`.ts` files (`Card.tsx`, `components/`, `helpers.ts`, etc.); helper components and constants go inside `index.tsx`. Do not create `README.md` or other prose files either.
+- A slide is **one `index.tsx` plus `assets/`** — nothing else. Do not create sibling `.tsx`/`.ts` files (`Card.tsx`, `components/`, `helpers.ts`, etc.); helper components and constants go inside `index.tsx`. Do not create `README.md` or other prose files either — speaker notes / a talk script belong in the `notes` export (see **Speaker notes** below), not in a markdown file.
 
 ## File contract
 
@@ -57,6 +57,27 @@ export default [Cover, Body] satisfies Page[];
 - The slide id is the kebab-case folder name. Pick something short and descriptive (`q2-roadmap`, `team-offsite-2026`).
 - `meta.theme` (optional) marks the slide as built from a theme under `themes/`. The id must match a `<id>.md` basename. Surfaces a back-link chip on the slide card and lists the slide on `/themes/<id>`. Omit if the slide isn't derived from a registered theme.
 - `meta.createdAt` is an **ISO 8601 string literal** (e.g. `'2026-05-16T12:00:00Z'`) set once when the slide is scaffolded. The home page uses it for the default "newest first" sort. Always include it on new slides — **immediately before writing the file, run `node -e "console.log(new Date().toISOString())"` via Bash and paste the exact output** as the value. Don't type a timestamp from memory — you will get the date or time wrong. Must be a plain string literal (no `new Date(...)` or imports in the slide itself) — the framework reads it via a regex at build time, not by evaluating the module.
+
+## Speaker notes (`notes` export)
+
+The framework has **built-in speaker notes**: an optional `notes` export in `index.tsx`, index-aligned with the default page array. The viewer shows them in the notes drawer and present mode shows them in the presenter view next to the timer.
+
+**When the user asks for a speech script, talk track, or presenter notes — in any language — write it into this export, never into a markdown/text file.** A `script.md` or `notes.md` is invisible to the runtime; the `notes` export is the only place the presenter view reads.
+
+```tsx
+export const notes: (string | undefined)[] = [
+  'Open with the analyst quote, then introduce yourself.',
+  undefined,
+  `Walk through the three pillars, one beat each.
+Pause for questions before moving on.`,
+];
+```
+
+- One entry per page, same order as the `export default` array. `notes[0]` belongs to the first page.
+- Entries are **plain text** — line breaks are preserved, markdown is not rendered. Use a template literal for multi-line notes, a normal string for one-liners.
+- Use `undefined` for a page with no notes; trailing `undefined` entries can be dropped.
+- When you add, remove, or reorder pages, re-align `notes` in the same edit — a shifted index silently attaches the wrong script to every page after it.
+- Write notes as something to *say*, not a summary of what's on screen: openers, transitions, numbers to cite, timing cues.
 
 ## Editing an existing slide
 
@@ -253,7 +274,7 @@ Read `references/steps.md` before authoring a stepped page — it covers composi
 
 ## Page transitions
 
-The framework can run an enter/exit animation between slide changes, declared as a `SlideTransition` (module-level default, per-page override; the **incoming page wins**). There's **no default** — pages snap unless you opt in, and snap-swap is a perfectly tasteful default. If you do opt in: one motion DNA per deck, 140–280 ms, magnitude under 12 px / 3% scale, opacity always part of it.
+The framework can run an enter/exit animation between slide changes, declared as a `SlideTransition` (module-level default, per-page override; the **incoming page wins**). There's **no default** — pages snap unless you opt in, and snap-swap is a perfectly tasteful default. If you do opt in: one motion DNA per deck, 200–280 ms, magnitude under 12 px / 3% scale, the outgoing page holds while the incoming page fades in on top (the framework ignores exit opacity unless `throughBackground: true`).
 
 Read `references/transitions.md` before declaring one — it has the full type contract, design principles, a six-member "tasteful family" of ready-to-use transitions sharing one DNA, direction-aware keyframes, and the anti-pattern list.
 
@@ -261,7 +282,7 @@ Read `references/transitions.md` before declaring one — it has the full type c
 
 When the *same visual object* exists on two adjacent pages, wrap it on both pages in `MorphElement` with the same `id` and enable `morph` on the incoming page's transition — position, size, radius, and colors interpolate in one continuous move (Keynote's "Magic Move"). Morph is for **state continuity** (a toggle sliding, a card expanding, a box joining a row); don't morph decoration.
 
-Read `references/morph.md` before writing one — the seven rules there (opacity-only enter/exit, deterministic geometry, no `transform` on the morph node, `useIsActivePage()` gating, …) were each earned on a real deck, and violating any of them produces a visibly broken morph.
+Read `references/morph.md` before writing one — the seven rules there (held exit + opacity-only enter, deterministic geometry, no `transform` on the morph node, `useIsActivePage()` gating, …) were each earned on a real deck, and violating any of them produces a visibly broken morph.
 
 ## Repeated elements: component, not `map`
 
@@ -329,8 +350,9 @@ This applies whenever the *visual element* repeats, not whenever the *data* does
 - [ ] All imported assets exist on disk — slide-local under `slides/<id>/assets/`, or global under `assets/` (imported via `@assets/...`).
 - [ ] Every `<ImagePlaceholder>` corresponds to a real image the user must supply — not decorative filler. If it could be replaced by typography or layout, it should be.
 - [ ] If a page uses `<Steps>`/`<Step>`, every `<Step>` is a direct child of a `<Steps>`, and the page still reads as complete when jumped to via the overview grid (entering forward builds up; jumping in shows it fully revealed).
-- [ ] If a `SlideTransition` is declared, every page sits in one family — same duration band (140–280 ms), same easing pair, same out-then-in stagger, magnitude under 12 px / 3%. No six-different-vocabularies decks. When in doubt, omit transitions entirely. (Pages that opt into `morph` may exceed the band to match the morph — see `references/morph.md`.)
+- [ ] If a `SlideTransition` is declared, every page sits in one family — same duration band (200–280 ms), same easing pair, same hold-then-fade-in shape (no enter delay, no `throughBackground` outside a deliberate section break), magnitude under 12 px / 3%. No six-different-vocabularies decks. When in doubt, omit transitions entirely. (Pages that opt into `morph` may exceed the band to match the morph — see `references/morph.md`.)
 - [ ] If a transition opts into `morph`: every morph `id` is unique per page and stable across the pair, morph geometry is pixel-constant (never measured after mount), no `transform` sits on the morph node, and entrance animations are gated behind `useIsActivePage()`.
+- [ ] If the user asked for a speech script / speaker notes, it lives in `export const notes` (index-aligned with the page array) — not in a markdown or text file.
 - [ ] Nothing outside `slides/<id>/` was edited.
 
 ## Anti-patterns
@@ -346,5 +368,6 @@ This applies whenever the *visual element* repeats, not whenever the *data* does
 - ❌ Installing packages. Only `react`, `@open-slide/core`, and standard web APIs are available.
 - ❌ Writing CSS to a shared file. Inline styles or scoped classnames only.
 - ❌ Creating `README.md` or other prose files inside the slide folder.
+- ❌ Delivering a speech script as a markdown or text file. The runtime only surfaces the `notes` export — anything else never reaches the presenter view.
 - ❌ Editing `package.json`, `open-slide.config.ts`, or other slides.
 - ❌ Using a primitive without reading its reference file — each `references/*.md` carries the primitive's own anti-pattern list (placeholder misuse, transition vocabulary, `<Step>` nesting, morph geometry).

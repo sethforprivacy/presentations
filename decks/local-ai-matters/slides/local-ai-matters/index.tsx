@@ -372,7 +372,7 @@ const PlanDecline: Page = () => (
     </div>
     <Source>
       x.com/SimonHoiberg “token rug pull” post · anthropics/claude-code issues #11810 / #65678 /
-      #87419 · retrieved 2026-09-20
+      #87419 · retrieved 2026-09-29
     </Source>
   </Shell>
 );
@@ -616,7 +616,7 @@ const Timeline: Page = () => (
         <TNode i={6} date="SEP 10" model="DeepSeek V4.1 Flash" up />
       </div>
     </div>
-    <Source>HF model cards: moonshotai · deepseek-ai · Qwen · zai-org · epoch.ai/models · dated 2026-09-17</Source>
+    <Source>HF model cards: moonshotai · deepseek-ai · Qwen · zai-org · epoch.ai/models · dated 2026-09-29</Source>
   </Shell>
 );
 
@@ -794,7 +794,7 @@ const Licensing: Page = () => (
     </div>
     <Source>
       opensource.org — Open Source Definition · model LICENSE conventions on HF: Apache-2.0 · MIT ·
-      custom · retrieved 2026-09-22
+      custom · retrieved 2026-09-29
     </Source>
   </Shell>
 );
@@ -957,7 +957,7 @@ const TierMacbook: Page = () => (
     equiv="Opus 4.6"
     speed={74}
     note="Frontier-class coding and vision in a machine that fits a backpack. No CUDA, no daemon, no datacenter."
-    source="Splash 1.0 SPEED-Bench (incoai) on M5 Pro (16c), 48 GB · retrieved 2026-09-18"
+    source="hf.co/incoai/Qwen3.8-27B-Splash — Splash 1.0 SPEED-Bench, M5 Pro (16c), 48 GB: 74 tok/s decode, short prompt (2026-09-18) · retrieved 2026-09-29"
   />
 );
 
@@ -968,7 +968,7 @@ const Tier3090: Page = () => (
     equiv="Opus 4.6"
     speed={138}
     note="A six-year-old used card, still the community’s benchmark box."
-    source="MiaAI-Lab EXL3 kit · 3090 stacks · retrieved 2026-09-17"
+    source="MiaAI-Lab EXL3 kit · syv-ai/qwen38-27b-rtx3090 measured 138 tok/s (DFlash2, CTX=fast, greedy) · retrieved 2026-09-29"
   />
 );
 
@@ -980,18 +980,18 @@ const TierSpark: Page = () => (
     speed={62.9}
     speedDecimals={1}
     note="Twelve times the model on two desk tiles instead of one card. Intelligence that used to need a rack now sits beside your keyboard."
-    source="github.com/MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks (2026-08-28) · retrieved 2026-09-17"
+    source="github.com/MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks — sparkDash decode, structured ×1 62.9 tok/s (2026-08-28) · retrieved 2026-09-29"
   />
 );
 
 const TierStudio: Page = () => (
   <TierBody
     machine="Mac Studio · M5 Ultra, 256 GB"
-    model="Qwen3.8-Flash-Next"
+    model="GLM-5.3-Flash 320B"
     equiv="Opus 4.8"
-    speed={108}
-    note="~2.5× faster to the first token than the M3 Ultra — and 60–85 tok/s even at 256K context. The long-context tax is gone."
-    source="Viticci’s MacStories M5 Ultra review (2026-09-21) · llamaperf.com/mac/m5 · retrieved 2026-09-22"
+    speed={81}
+    note="The hardware just shipped, and a community recipe has already doubled what it runs at. One quiet box on the desk carries the full 320B."
+    source="github.com/sethforprivacy/mac-studio-m5-ultra-omlx — oMLX main + recipe, decode 81 tok/s fresh (2026-09-29) · retrieved 2026-09-29"
   />
 );
 
@@ -1003,7 +1003,7 @@ const Tier6000: Page = () => (
     speed={145.5}
     speedDecimals={1}
     note="Nothing offloaded, nothing throttled. The highest end of local AI — faster than the frontier API it replaces."
-    source="hf.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw · retrieved 2026-09-17"
+    source="hf.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw — C1 decode 145.5 tok/s, 2× RTX PRO 6000, DFlash2-7 (2026-09-17) · retrieved 2026-09-29"
   />
 );
 
