@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { DesignSystem, Page, SlideMeta, SlideTransition } from '@open-slide/core';
-import { useIsActivePage, useSlidePageNumber } from '@open-slide/core';
+import { Step, Steps, useIsActivePage, useSlidePageNumber } from '@open-slide/core';
 
 export const design: DesignSystem = {
   palette: { bg: '#0a0d0a', text: '#e8f2e4', accent: '#4ade80' },
@@ -199,7 +199,7 @@ const Cover: Page = () => (
       }}
     >
       <Eyebrow>Global Freedom Tech Summit</Eyebrow>
-      <h1 data-slide-loc="202:6"
+      <h1
         style={{
           fontFamily: 'var(--osd-font-display)',
           fontSize: 'var(--osd-size-hero)',
@@ -208,9 +208,9 @@ const Cover: Page = () => (
           margin: '36px 0 40px',
         }}
       >
-        Run It
-        <br data-slide-loc="212:8" />
-        <span data-slide-loc="213:8" style={{ color: 'var(--osd-accent)' }}>Yourself.</span>
+        Own Your
+        <br />
+        <span style={{ color: 'var(--osd-accent)' }}>Intelligence.</span>
       </h1>
       <p data-slide-loc="215:6"
         style={{
@@ -330,54 +330,49 @@ const Stat = ({ n, label }: { n: string; label: string }) => (
 
 const PlanDecline: Page = () => (
   <Shell>
-    <div data-slide-loc="356:4" style={{ position: 'absolute', left: 120, right: 120, top: 120 }}>
-      <h2 data-slide-loc="358:6"
+    <div style={{ position: 'absolute', left: 120, right: 120, top: 120 }}>
+      <Eyebrow>Meanwhile, your plan got smaller.</Eyebrow>
+      <div
         style={{
-          fontFamily: 'var(--osd-font-display)',
-          fontSize: 84,
-          fontWeight: 900,
-          lineHeight: 1.2,
-          margin: '28px 0 56px',
+          marginTop: 44,
+          borderLeft: `4px solid ${amber}`,
+          paddingLeft: 40,
         }}
       >
-        Meanwhile, your plan got{' '}
-        <span data-slide-loc="368:8" style={{ color: amber }}>smaller.</span>
-      </h2>
-      <div data-slide-loc="370:6"
+        <div
+          style={{
+            fontFamily: 'var(--osd-font-display)',
+            fontSize: 76,
+            fontWeight: 900,
+            lineHeight: 1.22,
+            color: 'var(--osd-text)',
+            maxWidth: 1560,
+          }}
+        >
+          “the <span style={{ color: amber }}>token rug pull</span> is coming.
+          <br />
+          Get ready to pay up.”
+        </div>
+        <div style={{ marginTop: 28, fontSize: 28, color: muted }}>
+          — @SimonHoiberg, tracking his own limits
+        </div>
+      </div>
+      <div
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: 32,
+          marginTop: 64,
           maxWidth: 1680,
         }}
       >
+        <Stat n="4.8–5.9×" label="faster limit drain than two months ago — his own measurement" />
         <Stat n="~24 h" label="usable Claude Pro per month — paying subscriber’s log" />
-        <Stat n="2–2.5 d" label="until a $200 Max plan hits its weekly cap" />
-        <Stat n="1.7–5×" label="faster quota burn after the Aug 17 reset" />
-        <Stat n="~5 h" label="a Codex plan’s whole weekly allowance, gone" />
-      </div>
-      <div
-        style={{
-          marginTop: 24,
-          borderLeft: `4px solid ${amber}`,
-          paddingLeft: 32,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 10,
-        }}
-      >
-        <span style={{ fontSize: 28, lineHeight: 1.4, color: amber }}>
-          “the token rug pull is coming. Get ready to pay up.”
-          <span style={{ color: muted }}> — @SimonHoiberg</span>
-        </span>
-        <span style={{ fontSize: 25, lineHeight: 1.4, color: muted }}>
-          his own tracking: ~18% fewer tokens, same effort — limits draining
-          4.8–5.9× faster than 2 months ago
-        </span>
       </div>
     </div>
     <Source>
-      anthropics/claude-code issues #11810 / #65678 / #87419 · community.openai.com Codex threads 1388643 / 1378553 · x.com/SimonHoiberg “token rug pull” post · retrieved 2026-09-20
+      x.com/SimonHoiberg “token rug pull” post · anthropics/claude-code issues #11810 / #65678 /
+      #87419 · retrieved 2026-09-20
     </Source>
   </Shell>
 );
@@ -698,100 +693,109 @@ const PacePoint: Page = () => (
   </Shell>
 );
 
-const LicenceRow = ({
-  model,
-  licence,
-  osi,
-  note,
+const OpenPerk = ({
+  mark,
+  tone,
+  children,
 }: {
-  model: string;
-  licence: string;
-  osi: boolean;
-  note: string;
+  mark: string;
+  tone: string;
+  children: React.ReactNode;
+}) => (
+  <div style={{ display: 'flex', gap: 22, fontSize: 28, lineHeight: 1.45 }}>
+    <span style={{ color: tone, width: 24, textAlign: 'center' }}>{mark}</span>
+    <span style={{ color: 'var(--osd-text)' }}>{children}</span>
+  </div>
+);
+
+const OpenCard = ({
+  title,
+  tone,
+  children,
+}: {
+  title: string;
+  tone: string;
+  children: React.ReactNode;
 }) => (
   <div
     style={{
-      display: 'grid',
-      gridTemplateColumns: '440px 300px 1fr',
-      alignItems: 'center',
-      gap: 24,
-      padding: '16px 28px',
       background: panel,
       border: `1px solid ${dim}`,
-      borderLeft: `3px solid ${osi ? 'var(--osd-accent)' : amber}`,
+      borderLeft: `3px solid ${tone}`,
       borderRadius: 'var(--osd-radius)',
+      padding: '24px 32px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 20,
     }}
   >
-    <span
+    <div
       style={{
-        fontFamily: 'var(--osd-font-display)',
-        fontSize: 32,
-        fontWeight: 800,
-        color: 'var(--osd-text)',
+        fontFamily: MONO,
+        fontSize: 24,
+        letterSpacing: '0.24em',
+        textTransform: 'uppercase',
+        color: tone,
       }}
     >
-      {model}
-    </span>
-    <span style={{ fontSize: 26, color: osi ? 'var(--osd-accent)' : amber }}>
-      {licence}
-    </span>
-    <span style={{ fontSize: 26, color: muted }}>{note}</span>
+      {title}
+    </div>
+    {children}
   </div>
 );
 
 const Licensing: Page = () => (
   <Shell>
     <div style={{ position: 'absolute', left: 120, right: 120, top: 120 }}>
-      <h2
-        style={{
-          fontFamily: 'var(--osd-font-display)',
-          fontSize: 72,
-          fontWeight: 900,
-          lineHeight: 1.2,
-          margin: '28px 0 34px',
-        }}
-      >
-        Open weights
-        <br />
-        <span style={{ color: amber }}>≠ open source.</span>
-      </h2>
-      <p style={{ fontSize: 28, color: muted, margin: '0 0 44px', lineHeight: 1.5 }}>
-        Downloadable is not the same as free to use.
-      </p>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <LicenceRow
-          model="Qwen3.8-27B"
-          licence="Apache-2.0"
-          osi
-          note="OSI-approved — take it, ship it, sell it"
-        />
-        <LicenceRow
-          model="GLM-5.3-Flash"
-          licence="MIT"
-          osi
-          note="OSI-approved — the Flash tier is the freer one"
-        />
-        <LicenceRow
-          model="DeepSeek-V4.1-Flash"
-          licence="MIT"
-          osi
-          note="OSI-approved — same terms"
-        />
-        <LicenceRow
-          model="GLM-5.3"
-          licence="custom “glm-5.3”"
-          osi={false}
-          note="not OSI — MaaS over $10B/yr needs Z.ai’s review"
-        />
-        <LicenceRow
-          model="Kimi K3"
-          licence="custom “Kimi K3”"
-          osi={false}
-          note="not OSI — MaaS over $20M/yr needs a separate deal"
-        />
-      </div>
+      <Steps>
+        <h2
+          style={{
+            fontFamily: 'var(--osd-font-display)',
+            fontSize: 72,
+            fontWeight: 900,
+            lineHeight: 1.2,
+            margin: '24px 0 24px',
+          }}
+        >
+          Open weights <span style={{ color: amber }}>≠ open source.</span>
+        </h2>
+        <p style={{ fontSize: 28, color: muted, margin: '0 0 36px', lineHeight: 1.5 }}>
+          Downloadable is not the same as free to use — the caveats live in the licence text.
+        </p>
+        <Step>
+          <OpenCard title="Open weights gives you" tone="var(--osd-accent)">
+            <OpenPerk mark="✓" tone="var(--osd-accent)">
+              download the weights — no account, no key, no approval
+            </OpenPerk>
+            <OpenPerk mark="✓" tone="var(--osd-accent)">
+              run locally — offline, air-gapped, yours forever
+            </OpenPerk>
+            <OpenPerk mark="✓" tone="var(--osd-accent)">
+              no rate limits, no resets, no ToS in the loop
+            </OpenPerk>
+          </OpenCard>
+        </Step>
+        <Step>
+          <div style={{ marginTop: 24 }}>
+            <OpenCard title="Open source adds" tone={amber}>
+              <OpenPerk mark="+" tone={amber}>
+                an OSI-approved licence — commercial use without clauses
+              </OpenPerk>
+              <OpenPerk mark="+" tone={amber}>
+                the right to copy, ship, and sell it freely
+              </OpenPerk>
+              <OpenPerk mark="+" tone={amber}>
+                fine-tune, fork, and publish derivatives
+              </OpenPerk>
+            </OpenCard>
+          </div>
+        </Step>
+      </Steps>
     </div>
-    <Source>HF LICENSE files: zai-org · moonshotai · Qwen · deepseek-ai · retrieved 2026-09-17</Source>
+    <Source>
+      opensource.org — Open Source Definition · model LICENSE conventions on HF: Apache-2.0 · MIT ·
+      custom · retrieved 2026-09-22
+    </Source>
   </Shell>
 );
 
@@ -801,7 +805,7 @@ const DividerHw: Page = () => (
   <Divider
     cmd="lsblk --tiers"
     big={<>Pick your <span data-slide-loc="609:21" style={{ color: 'var(--osd-accent)' }}>machine</span></>}
-    note={<>Five tiers, two models. Measured in tokens/s — single-stream decode, 2026 community benchmarks.</>}
+    note={<>Five tiers, three models. Measured in tokens/s — single-stream decode, 2026 community benchmarks.</>}
   />
 );
 
@@ -982,12 +986,12 @@ const TierSpark: Page = () => (
 
 const TierStudio: Page = () => (
   <TierBody
-    machine="Mac Studio Ultra · 256 GB"
-    model="GLM-5.3-Flash 320B"
+    machine="Mac Studio · M5 Ultra, 256 GB"
+    model="Qwen3.8-Flash-Next"
     equiv="Opus 4.8"
-    speed={51}
-    note="All of it in a single Mac — no second box, no rack. Sparse weights do the heavy lifting; slow prefill is the tax."
-    source="llmcheck.net · hf.co/grant-ai · retrieved 2026-09-17"
+    speed={108}
+    note="~2.5× faster to the first token than the M3 Ultra — and 60–85 tok/s even at 256K context. The long-context tax is gone."
+    source="Viticci’s MacStories M5 Ultra review (2026-09-21) · llamaperf.com/mac/m5 · retrieved 2026-09-22"
   />
 );
 
@@ -1076,7 +1080,7 @@ export const transition: SlideTransition = {
 };
 
 export const meta: SlideMeta = {
-  title: 'Run It Yourself — Why Local AI Matters',
+  title: 'Own Your Intelligence — Why Local AI Matters',
   createdAt: '2026-09-17T10:34:34.431Z',
 };
 
@@ -1092,8 +1096,8 @@ export default [
   DividerHw,
   TierMacbook,
   Tier3090,
-  TierSpark,
   TierStudio,
+  TierSpark,
   Tier6000,
   Closing,
 ] satisfies Page[];
