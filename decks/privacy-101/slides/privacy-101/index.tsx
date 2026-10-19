@@ -610,7 +610,7 @@ const Choice: Page = () => (
   <div style={root}>
     <Eyebrow>What privacy actually is</Eyebrow>
     <h1 style={{ ...HEAD, position: 'absolute', left: PAD_X, top: 230, fontSize: 132, lineHeight: 1.08 }}>
-      Privacy isn't hiding.
+      Privacy isn't secrecy.
       <br />
       It's <Em>choice</Em>.
     </h1>
@@ -815,13 +815,13 @@ const Browser: Page = () => (
     </Title>
     <CardRow top={330}>
       <ToolCard name="Brave" tag="Easiest switch">
-        Blocks ads and trackers out of the box, on phone and computer. Switch off Wallet, Rewards and Leo AI in settings.
+        Blocks ads and trackers out of the box, on phone and computer. Import from Chrome and get on with life.
       </ToolCard>
       <ToolCard name="LibreWolf" tag="Computer">
         A pre-hardened Firefox. Strong defaults, uBlock Origin included, no tuning needed.
       </ToolCard>
-      <ToolCard name="Orion" tag="Mac & iPhone">
-        Light, fast, built-in tracker blocking. Pairs with Kagi search.
+      <ToolCard name="Mullvad Browser" tag="Someday">
+        The hardcore option, computer only. Use it unchanged so you look like everyone else.
       </ToolCard>
     </CardRow>
     <Takeaway tone="plain">
@@ -845,8 +845,8 @@ const Passwords: Page = () => (
       <ToolCard name="Bitwarden" tag="Open-source classic">
         What my wife and I used for years. Audited, cross-platform, can be self-hosted.
       </ToolCard>
-      <ToolCard name="KeePassXC" tag="Offline">
-        Respected and offline. No built-in sync, so you handle that yourself.
+      <ToolCard name="KeePassXC" tag="Power users only">
+        Respected, free and offline. No built-in sync, which is a deal-breaker for me.
       </ToolCard>
     </CardRow>
     <Takeaway>
@@ -865,7 +865,7 @@ const Email: Page = () => (
     </Title>
     <CardRow top={330}>
       <ToolCard name="Proton Mail" tag="My inbox">
-        End-to-end encrypted, usable free plan, no phone number needed to sign up.
+        What I use for all my email. Free plan, no phone number, encrypted end to end between Proton users.
       </ToolCard>
       <ToolCard name="Tuta" tag="Also great">
         Encrypted email from Germany. People I trust swear by it.
@@ -892,11 +892,11 @@ const Search: Page = () => (
       <ToolCard name="Brave Search" tag="Free">
         Its own index, not a Google or Bing wrapper. Default in Brave.
       </ToolCard>
-      <ToolCard name="DuckDuckGo" tag="Built into iPhone">
+      <ToolCard name="DuckDuckGo" tag="iPhone fallback">
         Mostly Bing results without the profile. One tap to set on Safari.
       </ToolCard>
-      <ToolCard name="Kagi" tag="Paid, no ads">
-        You pay with money, not data. Privacy Pass unlinks searches from your account.
+      <ToolCard name="Kagi" tag="What I use">
+        My go-to. Pay with money, not data. Privacy Pass (Professional plan) unlinks searches from you.
       </ToolCard>
     </CardRow>
     <Takeaway tone="yellow">
@@ -917,8 +917,8 @@ const Messaging: Page = () => (
       <ToolCard name="Signal" tag="Start here" tagColor={YELLOW}>
         End-to-end encrypted by default, easy to get family onto. A username keeps your number private.
       </ToolCard>
-      <ToolCard name="SimpleX" tag="Next level" tagColor={YELLOW}>
-        No phone number, no username, no ID at all. It protects who you talk to, not just what you say.
+      <ToolCard name="WhatsApp & Telegram" tag="Keep for groups" tagColor={YELLOW}>
+        Fine for big public groups. Move one-to-one and family chats to Signal. Don't fight about it.
       </ToolCard>
       <ToolCard name="Your people" tag="The hard part" tagColor={YELLOW}>
         “A messenger app with no people to message is just pointless.” Bring two of yours over.
@@ -951,7 +951,7 @@ const Money: Page = () => (
     </CardRow>
     <Takeaway>
       <img src={cakeMark} alt="" style={{ height: 52, display: 'block' }} />
-      Try it today: Cake Wallet's onboarding station, right here at Bitmela.
+      Try it today at the Cake Wallet station here. Full disclosure: I'm Cake's COO.
     </Takeaway>
     <Footer />
   </div>
@@ -993,10 +993,10 @@ const Os: Page = () => (
         Hardened Android without Google watching. Pixel-only; Pixel 8 or newer is best.
       </ToolCard>
       <ToolCard name="On an iPhone?" tag="Phone" tagColor={ORANGE}>
-        Solid protection from other apps and companies. Not from Apple itself.
+        What I use day to day. Turn on Advanced Data Protection: the best privacy of any phone out of the box.
       </ToolCard>
       <ToolCard name="Linux" tag="Computer" tagColor={ORANGE}>
-        Pop!_OS, Linux Mint or Zorin OS. Easier than you think, and I run it daily.
+        Pop!_OS or Zorin OS. Switch slowly, one app at a time. The hard part is your accounts, not Linux.
       </ToolCard>
     </CardRow>
     <Takeaway tone="plain">
@@ -1370,7 +1370,7 @@ const B3: Page = () => (
     }
     actions={
       <>
-        <Action n={1}>Install an authenticator app: Proton Authenticator, or Aegis on Android.</Action>
+        <Action n={1}>Install an authenticator app: Proton Authenticator or Ente Auth.</Action>
         <Action n={2}>
           In your manager: <Tap>Settings › Two-factor authentication</Tap>, scan the QR.
         </Action>
@@ -1773,8 +1773,8 @@ const Close: Page = () => (
       <BitmelaChip />
       <span>Thank you · questions?</span>
     </Eyebrow>
-    <h1 style={{ ...HEAD, position: 'absolute', left: PAD_X, top: 290, width: 1480, fontSize: 92, fontWeight: 600, lineHeight: 1.16 }}>
-      “I'm not a Bitcoin maximalist. I'm not a Monero maximalist. I'm a <Em>freedom</Em> maximalist.”
+    <h1 style={{ ...HEAD, position: 'absolute', left: PAD_X, top: 290, width: 1480, fontSize: 132, fontWeight: 700, lineHeight: 1.08 }}>
+      Now get out there and <Em>opt out</Em> this week.
     </h1>
     <div style={{ position: 'absolute', left: PAD_X, top: 720, display: 'flex', alignItems: 'center', gap: 32 }}>
       <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', border: `3px solid ${FONDANT}` }}>
@@ -1796,12 +1796,12 @@ const Close: Page = () => (
 export const notes: (string | undefined)[] = [
   // 1 Cover
   `[0:00] Welcome. Get phones out now, and ask people to switch to mobile data if the Wi-Fi is slow.
-Frame the title: "A lot of privacy content pushes people from zero to 100, and they never take a good first step. Today is zero to one." [OO s1e05 Justin]
+Frame the title: "A lot of privacy content pushes people from zero to 100, and they never take a good first step." [OO s1e05 Justin] Then, in your own framing: today is zero to one.
 Honest hook for a Bitcoin crowd: "I got into crypto, which led to personal privacy, just to make money." [guest Priv8 2022]`,
   // 2 Hello
   `[0:01] 30 seconds. Opt Out since 2021; COO at Cake Wallet (disclose it: Cake comes up on the money slide).
-Own your lens: "Most of the people I talk to are in the Western world, with less government oppression to actively fight." [OO s1e01] Then: "I'm here to learn from you too." [OO s1e07]
-Origin story if time: in cybersecurity, worked for a company rumoured to aid the Uyghur crackdown. "It really shook me." [guest Expat Money 2024]`,
+Own your lens: "Most of the people I talk to are in the Western world, with less government oppression to actively fight." [OO s1e01] Then, paraphrasing your s1e07 point: it matters to hear from people who grew up with different experiences. The people who care most about privacy are "a lot of the global South… places where people have faced oppression." [guest bitcoin-rails 2026-10]
+Origin story if time: you worked in cybersecurity at Cisco. Cisco built surveillance tech used against the Uyghurs; you didn't work on it and didn't know until it came out. Once you knew, you left. "It really shook me." [guest Expat Money 2024; you confirmed 2026-10-19] Never say you built those tools.`,
   // 3 Plan
   `[0:02] Set expectations: this is a workshop, not a lecture. Most of the hour is hands-on.
 The vote comes at about the 20-minute mark. Everyone leaves having done at least one real step.`,
@@ -1812,8 +1812,8 @@ Follow-up: "It's natural to close the bathroom door and the curtains. That isn't
   // 5 Choice
   `[0:04] Your definition: "Privacy is not having nothing known about you. Privacy is that you get to choose." [guest Expat Money 2024]
 Cypherpunk root: privacy is "the power to selectively reveal oneself to the world" (Hughes, 1993) [OO s1e04]
-Why it matters: "A lot of ideas, a lot of art gets shut down before it even could exist, because we self-censor when we know we're being watched." [OO s1e06]
-"If it's free, you are the product." / "If you're not paying with your money, you're paying with your data." [OO s1e12, Kagi ep]`,
+Why it matters: "A lot of ideas, a lot of art gets shut down before it even could exist, because we self-censor when we know we're being watched." [OO s1e06, citing Glenn Greenwald's TED talk]
+"If you're not paying with your money, you're paying with your data." [OO Kagi ep] Or: "Whatever you use online, you're paying with something: your time, your data, your eyeballs, or your money." [FTF 20, 2025-11]`,
   // 6 Already out
   `[0:06] Keep it factual. Pick one or two to talk through.
 - CoWIN Telegram bot, June 2023: phone number in, Aadhaar/passport/PAN/DOB out (Newslaundry; govt said CoWIN itself wasn't breached).
@@ -1833,7 +1833,7 @@ Honest moment: you've struggled with burnout and feeling it's futile too. [OO s1
 "If nothing else you get from this, find a good community. Get plugged in." [OO s1e06]
 "Find some community around you that can give you sane tips and sane feedback." [OO s1e12] If a community shames beginners, leave it. [OO s1e01]
 Crowdsourced verification: you can't audit code, but people you trust can. [OO s1e02]
-Local: Internet Freedom Foundation (digital-rights litigation; they fought the Proton block order) and FOSS United. Have people scan the Privacy 101 Signal group QR now: it's the room's community after today.`,
+Local: Internet Freedom Foundation (digital-rights litigation; IFF has tracked the Proton block case) and FOSS United. Have people scan the Privacy 101 Signal group QR now: it's the room's community after today.`,
   // 9 Map divider
   `[0:12] Transition. Eleven steps, from privacy-first-steps, in the order you'd take them starting over today.`,
   // 10 Map
@@ -1845,9 +1845,9 @@ Starting with browser and password manager works because they barely change dail
 "Just install Brave, import everything, and live your life." [guest Expat Money] "Anything Chrome-compatible works on Brave." [guest Litecoin]
 Brave settings to switch off: brave://settings/web3 (Wallet), brave://settings/leo-ai (Leo), Rewards. Hiding isn't the same as disabling.
 Chrome dropped uBlock Origin (MV2) for good on 31 Aug 2026. Brave hosts uBO itself at brave://settings/extensions/v2.
-Firefox: since the Feb 2025 terms change, LibreWolf is the only Firefox you recommend. Orion is Apple-only, so Windows/Linux users can't use it.`,
+Firefox: since the Feb 2025 terms change, LibreWolf is the only Firefox you recommend. Advanced: Mullvad Browser on a computer; Tor Browser when you need anonymity, never for your bank. The Brave settings above are optional, only if asked; your beginner advice is "no extensions, no settings changes".`,
   // 12 Passwords
-  `[0:15] Proton Pass is your current tool; you and your wife used Bitwarden for years. [blog] You've switched managers twice and it was fine. [OO s1e04]
+  `[0:15] Proton Pass is your current tool; you and your wife used Bitwarden for years. [blog] You switched Enpass → Bitwarden (2021) and later to Proton Pass, and it was fine. [OO s1e04; FTF 13] "Bitwarden and Proton Pass, pick either one." [FTF 13, 2025-09] "There aren't many privacy tools that make your life easier. A password manager is one of them."
 Free tiers: Proton Pass has unlimited logins, 10 aliases and 3 TOTP items. Bitwarden is free and open source, but has no master-password recovery.
 "It can start with something as simple as moving your passwords out of browser sync." [OO s1e03]
 Track B on the ballot.`,
@@ -1855,26 +1855,28 @@ Track B on the ballot.`,
   `[0:16] "I'm a Proton Mail user, huge fan. Same vein as Brave and Signal: you can start without too much headache." [guest Expat Money]
 "With Proton Mail you're not paying with your data. On the free option, you're piggybacking off the people who pay." [OO s1e05]
 Aliases: "Normal practice is one email address for literally every account." [OO s2e01] Proton/SimpleLogin aliases fix that. Use them for accounts and newsletters, not for people you talk to.
-Story: Trezor's mailing list leaked and the phishing started; you disabled that one alias in seconds. [guest Litecoin]
+Story: Trezor's newsletter list leaked and you got spear-phished on that alias. Lesson: switch an alias off right after you sign up, and turn it back on when you need it. [FTF 22, 2025-12]
 India: Karnataka HC ordered a Proton Mail block (29 Apr 2025); a Division Bench STAYED it 16 Mar 2026. Status after the June 2026 hearing is unverified; check before the talk. It's still on the India App Store.`,
   // 14 Search
   `[0:18] "If everyone's using Google, guess who has a monopoly on the flow of information on the internet?" [OO Kagi ep]
 Brave Search runs its own index. DuckDuckGo is mostly Bing results, without the profile. Kagi is $5–25/mo, USD only.
-Your own Kagi caveat: an account ties searches together, which is why you backed away at first. Privacy Pass (Feb 2025) fixes that, but needs the Professional plan or higher. [OO Kagi ep]
+Kagi is your own daily search (Ultimate tier since about 2022). Your old caveat: an account ties searches together, which is why you backed away at first. Privacy Pass (Feb 2025) fixes that, but needs the Professional plan or higher. [OO Kagi ep]
 Tee up the warm-up.`,
   // 15 Messaging
   `[0:19] "I have all my friends and family on Signal. I was able to get everyone off of text messages." [guest Expat Money]
 "A messenger app with no people to message is just pointless." [guest Expat Money]
 "Don't fight everyone who doesn't use the messaging app you prefer." [OO s1e08] WhatsApp is everywhere here, so add Signal, don't wage war.
 "Public groups anyone can join? Encryption doesn't matter there." [guest Expat Money] One-to-one and family chats are what to move.
-SimpleX: no identifiers at all, "taken my messenger use by storm". [blog]
+If asked about SimpleX: you loved the protocol but gave up on it about a year ago (groups, lost messages, notifications). Signal, Telegram for work, and email is all you keep up with now. [FTF 58, 2026-09]
+Family story (cleared 2026-10-19): you were the weirdo who pushed your own family onto Signal. What you'd tell them instead: model it.
 India context (presenter only): DoT SIM-binding directions (Nov 2025, deadline 31 Dec 2026) may force messaging apps to stay bound to the SIM. MeitY sent Signal and Telegram a username notice on 2 Jul 2026; outcome unknown.`,
   // 16 Money
   `[0:21] Disclose: you work at Cake. "Monero is the closest thing we have to digital cash." [OO s1e05] "I didn't understand how valuable cash was until I got into Monero." [OO s1e05]
 "I pay in the most privacy-preserving way, whether it's a sandwich or a coffee." [OO Proton Wallet ep]
 "It protects you and the people you transact with." [OO s1e09]
 Tax question: "I can use Monero for my business, and at tax time reveal transaction details as needed." [OO s1e09] India taxes crypto gains at 30% plus 1% TDS; this isn't tax advice.
-KYC: "The discount at the government-approved exchange is paid for with all your personal information." [OO s1e07] WazirX lost ~$230M in July 2024: custody risk in one line.
+KYC: "The discount you're getting when you're going to that central exchange… is that you're giving them over all of your personally identifiable information." [OO s1e07]
+Bitcoin's 2026 "good enough" bar: no-KYC coins, receive with Silent Payments, send with Payjoin (both in Cake). WazirX lost ~$230M in July 2024: custody risk in one line.
 FIU-IND sent takedown notices (9 Sep 2026) to swap services including ChangeNOW, SimpleSwap, FixedFloat and Guardarian. Mention only if asked.
 Point to the Cake onboarding station at Bitmela for hands-on help.`,
   // 17 VPN
@@ -1885,7 +1887,7 @@ India: CERT-In's 2022 directions require VPN providers to keep user identity and
   // 18 OS
   `[0:24] "I was a huge Google fanboy, testing every Android version before release." [guest Litecoin]
 GrapheneOS: Pixel 6 and newer; Pixel 8+ recommended for 7 years of updates. Pixel 10a is ₹55,999 on the Google Store India, so be honest that this is a later step for most of the room.
-"You can opt out of Apple's walled garden without sacrificing privacy or security." [OO s1e03] iPhone users already have decent app-level protection.
+"I definitely used to be a hardcore anti-Apple person… primarily it's an iPhone now and a Mac." ADP is the only reason you're OK with that; everyone on an iPhone should turn it on. [FTF 28, 2026-02] You still keep a GrapheneOS phone. Pop!_OS and Zorin are recommendations; don't imply you run Linux daily now.
 Linux: "The one I've settled on and recommend to a lot of people is Pop!_OS." [OO s1e10] Zorin OS is the easiest-looking switch.
 Free tip for budget phones: "The cheaper the hardware, the more preinstalled crap." Uninstall what you don't use. [OO s1e01]`,
   // 19 Warm-up
@@ -1914,7 +1916,7 @@ Don't store the phrase in Proton Drive or Pass.`,
 Free plan: 1 address, 150 sends/day, 3 folders + 3 labels, 10 hide-my-email aliases. The desktop app is a trial only on Free; use the web app plus the mobile app.`,
   // 26 A5
   `Aliases come from Proton Pass (free: 10). Free can reply from an alias.
-Your story: 200+ aliases, and the Trezor phishing alias killed in seconds.
+Your story: 200+ aliases. And the Trezor leak: you got spear-phished on an alias you'd left on, so switch aliases off right after signing up.
 "I treat aliases as a way to manage email from accounts I don't directly communicate with." [OO s2e01]`,
   // 27 A6
   `Easy Switch "Gmail connection": Free can connect 1 Gmail account. The import can use up to 80% of storage, so maybe import only recent mail.
@@ -1932,7 +1934,7 @@ Passphrase: 4–6 random words. Never reuse a password from anywhere else.`,
 iPhone (iOS 18+): Settings › General › AutoFill & Passwords.
 Verify by logging out of one site and logging back in with autofill.`,
   // 31 B3
-  `Authenticators: Proton Authenticator (free), or Aegis on Android (open source, encrypted backups). [blog: switching-to-calyxos]
+  `Authenticators: Proton Authenticator or Ente Auth. Keep 2FA codes separate from the password manager, and never use SMS 2FA. [FTF 13, 2025-09]
 Bitwarden detail: without 2FA it emails a code on every new device (since Mar 2025), so 2FA also removes that friction.`,
   // 32 B4
   `Google export: Chrome ⋮ › Passwords and autofill › Google Password Manager › Settings › Export. Android needs a screen lock. The CSV excludes passkeys.
@@ -1959,9 +1961,7 @@ Set these before blocking anyone. For family onboarding, leaving "find me" on is
 "Less history stored means less to lose."`,
   // 40 C6
   `Join the Privacy 101 Signal group first (QR on screen), then swap usernames with neighbours. Fun moment.
-Next level, if anyone asks: SimpleX, no number and no username.
-"I don't think people realize how easy it is to use Signal calls to replace phone calls." [OO s1e09] Try a quick call too.
-Next level: SimpleX, with no identifiers at all.`,
+"I don't think people realize how easy it is to use Signal calls to replace phone calls." [OO s1e09] Try a quick call too.`,
   // 41 Done
   `[0:47] Celebrate. "The most important thing is that people take that first step, and then figure out if there's a further step." [guest Expat Money]`,
   // 42 Next 30
@@ -1974,7 +1974,8 @@ The slides stay online for the other tracks. Week 4: Cake onboarding station or 
   // 44 Resources
   `[0:51] Leave this up during Q&A so people can scan. Privacy first steps, Opt Out, the Privacy 101 Signal group, Cake Wallet.`,
   // 45 Close
-  `[0:52] Quote: "I'm not a Bitcoin maximalist. I'm not a Monero maximalist. I'm a freedom maximalist." [blog: why-i-focus-on-bitcoin]
+  `[0:52] Close on your Opt Out sign-off: "Now get out there and opt out this week." [every Opt Out outro]
+If you want the identity line: "I very intentionally call myself a freedom tech maximalist, not a Bitcoin maximalist… not a Monero maximalist." [EthCC 2026-03; re-listen before quoting]
 "Get comfortable with these tools before they become a necessity." [OO s1e09] Then Q&A.
 Q&A prep: the tax question (Monero view keys / tx keys let you disclose when needed); "is a VPN illegal in India?" (no; the CERT-In rules bind providers, not users); "WhatsApp is encrypted, isn't it?" (the content is, but Meta sees the metadata, and SIM-binding is coming).`,
 ];
