@@ -29,28 +29,52 @@ jobs:
           REPO: ${{ github.event.repository.name }}
         run: |
           set -euo pipefail
-          rm -rf _site .deck-list
-          mkdir -p _site
+          # Every workspace builds against ONE shared base (/<repo>/), so a deck lives at
+          #   /<repo>/s/<slide>/            (canonical; open-slide's router always uses /s/:slideId)
+          #   /<repo>/<slide>/              (short link → redirects to the canonical URL)
+          # instead of the old per-workspace base that doubled the name (/<repo>/<deck>/s/<slide>/).
+          # Old URLs keep working as redirects. Builds share _site/assets/ (content-hashed names).
+          rm -rf _site _build .deck-list
+          mkdir -p _site/assets _build
           : > .deck-list
+          BASE="/$REPO/"
+          redirect() { # redirect <dir under _site> <absolute target URL>
+            mkdir -p "_site/$1"
+            printf '<!doctype html><meta charset="utf-8"><title>Redirecting…</title><link rel="canonical" href="%s"><meta http-equiv="refresh" content="0; url=%s"><script>location.replace("%s"+location.search+location.hash)</script><a href="%s">Continue to the deck</a>\n' "$2" "$2" "$2" "$2" > "_site/$1/index.html"
+          }
           for dir in decks/*/; do
             deck=$(basename "$dir")
             [ -f "$dir/package.json" ] || continue
             slides=$(ls -d "$dir"slides/*/ 2>/dev/null | xargs -r -n1 basename | tr '\n' ' ' || true)
             [ -n "${slides// /}" ] || { echo "::warning::no slides in $deck, skipping"; continue; }
 
-            # Inject the deploy base path (runner-local copy; repo file untouched)
-            printf "import type { OpenSlideConfig } from '@open-slide/core';\n\nconst openSlideConfig: OpenSlideConfig = { base: '/%s/%s/' };\n\nexport default openSlideConfig;\n" "$REPO" "$deck" > "$dir/open-slide.config.ts"
+            # Inject the shared deploy base (runner-local copy; repo file untouched). No slide browser:
+            # its "home" would be this workspace's own list, but home is the site-wide index here.
+            printf "import type { OpenSlideConfig } from '@open-slide/core';\n\nconst openSlideConfig: OpenSlideConfig = { base: '%s', build: { showSlideBrowser: false } };\n\nexport default openSlideConfig;\n" "$BASE" > "$dir/open-slide.config.ts"
 
             (cd "$dir" && npm ci --no-fund --no-audit)
-            (cd "$dir" && npm run build -- --out-dir "$GITHUB_WORKSPACE/_site/$deck")
+            (cd "$dir" && npm run build -- --out-dir "$GITHUB_WORKSPACE/_build/$deck")
 
-            # Materialize known routes so every deep link is a real 200
-            for s in $slides; do
-              mkdir -p "_site/$deck/s/$s"
-              cp "_site/$deck/index.html" "_site/$deck/s/$s/index.html"
+            # Merge content-hashed assets; a same-named file must be byte-identical.
+            for f in "_build/$deck/assets/"*; do
+              t="_site/assets/$(basename "$f")"
+              if [ -e "$t" ] && ! cmp -s "$f" "$t"; then echo "asset collision: $t" >&2; exit 1; fi
+              cp "$f" "$t"
             done
-            # Last-resort fallback for unknown routes under this deck (served as 404 by Pages, still renders)
-            cp "_site/$deck/index.html" "_site/$deck/404.html"
+
+            for s in $slides; do
+              case "$s" in s|assets) echo "slide id '$s' is reserved" >&2; exit 1 ;; esac
+              [ ! -e "_site/s/$s" ] || { echo "slide id '$s' used by two decks" >&2; exit 1; }
+              # Materialize known routes so every deep link is a real 200
+              mkdir -p "_site/s/$s/presenter"
+              cp "_build/$deck/index.html" "_site/s/$s/index.html"
+              cp "_build/$deck/index.html" "_site/s/$s/presenter/index.html"
+              redirect "$s" "${BASE}s/$s/"                                  # short link
+              redirect "$deck/s/$s" "${BASE}s/$s/"                          # legacy URL
+              redirect "$deck/s/$s/presenter" "${BASE}s/$s/presenter/"      # legacy presenter URL
+            done
+            # Legacy per-workspace root → its first slide
+            redirect "$deck" "${BASE}s/$(echo $slides | cut -d' ' -f1)/"
 
             echo "$deck|$slides" >> .deck-list
           done
@@ -66,7 +90,7 @@ jobs:
             for s in $slides; do
               title=$(grep -o "title: '[^']*'" "decks/$deck/slides/$s/index.tsx" | head -1 | sed "s/^title: '//;s/'$//" || true)
               [ -n "$title" ] || title=$s
-              rows="<li><a href=\"./$deck/s/$s/\">$title</a><span>$deck</span></li>$rows"
+              rows="<li><a href=\"./s/$s/\">$title</a><span>$s</span></li>$rows"
             done
           done < .deck-list
           cat > _site/index.html <<EOF

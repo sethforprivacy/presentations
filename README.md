@@ -20,6 +20,8 @@ Talks given by Seth For Privacy ([sethforprivacy.com](https://sethforprivacy.com
 
 Each open-slide project is a fully self-contained workspace (own `package.json`, lockfile, config, skills). Keep it that way — no shared/root toolchain.
 
+Every push to `main` deploys all decks to GitHub Pages: [sethforprivacy.github.io/presentations](https://sethforprivacy.github.io/presentations/). Each deck is served at `/presentations/s/<slide-id>/`, with a short link at `/presentations/<slide-id>/` (e.g. [`/presentations/privacy-101/`](https://sethforprivacy.github.io/presentations/privacy-101/)), so slide ids must be unique across workspaces.
+
 - [`decks/local-ai-matters`](./decks/local-ai-matters) — source for **Run It Yourself - Why Local AI Matters**
 - [`decks/privacy-101`](./decks/privacy-101) — source for **Privacy 101 — From 0 to 1** (Bitmela 2026, Jaipur)
 
