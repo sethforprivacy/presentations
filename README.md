@@ -14,12 +14,14 @@ Talks given by Seth For Privacy ([sethforprivacy.com](https://sethforprivacy.com
 | [Putting the punk back in solarpunk](<./Putting the punk back in solarpunk.pdf>) | EthCC 2026 | Cake Wallet deck on solarpunk as an ethos: what "solarpunk" means, its darker-side questions ("larpunk?"), and finding the nuance between techno-optimism and punk self-reliance. |
 | [Spark and Ark: the good, the bad, and the ugly](<./Spark and Ark.pptx>) *(PowerPoint)* | BTC Prague 2026 | Head-to-head of the Ark and Spark Bitcoin L2s (VTXOs, expiry, finality, privacy, operator trust) evaluated from the perspective of a mobile-only, mostly-offline wallet user. |
 | [Run It Yourself - Why Local AI Matters](<./Run It Yourself - Why Local AI Matters.pdf>) | Upcoming talk | open-slide deck on why to run AI locally: the pace of open model releases, shrinking cloud-plan limits, and hardware tiers (MacBook → RTX 3090 → DGX Spark → Mac Studio → workstation) with measured tokens/sec vs. cloud APIs. Source: [`decks/local-ai-matters`](./decks/local-ai-matters). |
+| Privacy 101 — From 0 to 1 *(open-slide, in progress)* | Bitmela 2026 (Jaipur) | Hands-on Cake Wallet × Opt Out workshop following the privacy-first-steps guide: why privacy, the 11-step map, a search-engine warm-up, then the room votes on one live track (Proton Mail + alias, a password manager, or Signal from scratch). Source: [`decks/privacy-101`](./decks/privacy-101). |
 
 ## Source decks (`decks/`)
 
 Each open-slide project is a fully self-contained workspace (own `package.json`, lockfile, config, skills). Keep it that way — no shared/root toolchain.
 
 - [`decks/local-ai-matters`](./decks/local-ai-matters) — source for **Run It Yourself - Why Local AI Matters**
+- [`decks/privacy-101`](./decks/privacy-101) — source for **Privacy 101 — From 0 to 1** (Bitmela 2026, Jaipur)
 
 Working in any project:
 
@@ -33,7 +35,7 @@ npm run preview   # preview the built bundle
 
 ### Adding a new open-slide deck
 
-1. Create a new directory under `decks/` named as a kebab-case slug of the deck title (`decks/<slug>/`). Fastest path: copy `decks/local-ai-matters` as a template and clear its `slides/` content.
+1. Create a new directory under `decks/` named as a kebab-case slug of the deck title (`decks/<slug>/`). Fastest path: copy `decks/privacy-101` as a template (open-slide v2: React 19, no `vite` devDependency, npm lockfile), clear its `slides/` content, and run `npm install`.
 2. Author the deck at `slides/<slug>/index.tsx` (each project can hold multiple slide decks under `slides/`).
 3. When done presenting, export to PDF and commit it at the repo root, named after the deck title.
 4. Add a row to the table above — deck link, event + year, one-line summary, and a pointer to the source directory.
