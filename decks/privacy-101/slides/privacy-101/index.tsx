@@ -577,11 +577,11 @@ const Plan: Page = () => (
       Less talking. More <Em>doing</Em>.
     </Title>
     <div style={{ position: 'absolute', left: PAD_X, top: 330, width: 1680 }}>
-      <AgendaRow n="1" label="Why bother?" mins="5 min" />
+      <AgendaRow n="1" label="Why bother?" mins="10 min" />
       <AgendaRow n="2" label="The map: 11 steps from 0 to 1" mins="12 min" />
       <AgendaRow n="3" label="Warm-up: everyone, right now" mins="3 min" accent={YELLOW} />
       <AgendaRow n="4" label="You vote. We do one step together." mins="20 min" accent={YELLOW} />
-      <AgendaRow n="5" label="Your next 30 days + questions" mins="15 min" />
+      <AgendaRow n="5" label="Your next 30 days + questions" mins="10 min" />
     </div>
     <Footer />
   </div>
@@ -648,7 +648,7 @@ const AlreadyOut: Page = () => (
           Type in a phone number, get back Aadhaar, passport and date of birth.
         </BreachCard>
         <BreachCard what="Star Health" when="2024">
-          31 million customers' medical and ID records, served through Telegram bots.
+          31 million customers' medical and ID records (the hacker's claim), served through Telegram bots.
         </BreachCard>
       </div>
       <div style={{ display: 'flex', gap: 28 }}>
@@ -826,7 +826,7 @@ const Browser: Page = () => (
     </CardRow>
     <Takeaway tone="plain">
       <span style={{ fontFamily: MONO, fontWeight: 400 }}>tip</span>
-      Elsewhere, add uBlock Origin. It's gone from Chrome since August 2026.
+      Elsewhere, add uBlock Origin. Chrome pulled it from its store in August 2026.
     </Takeaway>
     <Footer />
   </div>
@@ -889,14 +889,14 @@ const Search: Page = () => (
       Your searches say <Em>everything</Em>.
     </Title>
     <CardRow top={330}>
-      <ToolCard name="Brave Search" tag="Free">
+      <ToolCard name="Kagi" tag="What I use" tagColor={YELLOW} highlight>
+        For everything. Pay with money, not data. Privacy Pass (Professional plan) unlinks searches from you.
+      </ToolCard>
+      <ToolCard name="Brave Search" tag="Best free">
         Its own index, not a Google or Bing wrapper. Default in Brave.
       </ToolCard>
       <ToolCard name="DuckDuckGo" tag="iPhone fallback">
-        Mostly Bing results without the profile. One tap to set on Safari.
-      </ToolCard>
-      <ToolCard name="Kagi" tag="What I use">
-        My go-to. Pay with money, not data. Privacy Pass (Professional plan) unlinks searches from you.
+        Mostly Bing results without the profile. Not my pick, but the best Safari offers.
       </ToolCard>
     </CardRow>
     <Takeaway tone="yellow">
@@ -990,7 +990,7 @@ const Os: Page = () => (
     </Title>
     <CardRow top={330}>
       <ToolCard name="GrapheneOS" tag="Phone" tagColor={ORANGE}>
-        Hardened Android without Google watching. Pixel-only; Pixel 8 or newer is best.
+        Hardened Android without Google watching. Pixel-only for now; Pixel 8 or newer is best.
       </ToolCard>
       <ToolCard name="On an iPhone?" tag="Phone" tagColor={ORANGE}>
         What I use day to day. Turn on Advanced Data Protection: the best privacy of any phone out of the box.
@@ -1011,7 +1011,7 @@ const Os: Page = () => (
 
 const WarmUp: Page = () => (
   <DoIt
-    track="Warm-up · everyone"
+    track="Warm-up · everyone · 2 min"
     title={
       <>
         Change your default <Em on="blue">search engine</Em>.
@@ -1020,23 +1020,20 @@ const WarmUp: Page = () => (
     actions={
       <>
         <Action n={1}>
-          <b>Android, Chrome:</b> open search.brave.com once, then <Tap>⋮ › Settings › Search engine</Tap>
+          <b>Android, Chrome:</b> <Tap>⋮ › Settings › Search engine</Tap> and pick Brave
         </Action>
         <Action n={2}>
           <b>iPhone, Safari:</b> <Tap>Settings › Search › Search Engine</Tap> and pick DuckDuckGo
         </Action>
         <Action n={3}>
-          <b>Already on Brave?</b> Brave Search is the default. Give yourself a point.
+          <b>Already on Brave?</b> Check <Tap>Settings › Search engines</Tap> says Brave. Give yourself a point.
         </Action>
       </>
     }
     aside={
       <>
-        <Aside label="Time" tone="white">
-          <span style={{ fontFamily: MONO, fontSize: 64 }}>2 min</span>
-        </Aside>
-        <Aside label="Older iPhone?" tone="dark">
-          Look under <span style={{ fontFamily: MONO }}>Settings › Safari › Search Engine</span>.
+        <Aside label="Not listed?" tone="dark">
+          Android: search once on search.brave.com. Older iPhone: <span style={{ fontFamily: MONO }}>Settings › Safari</span>.
         </Aside>
         <Aside label="That's step 06" tone="yellow">
           Done. You're already on the map.
@@ -1172,7 +1169,7 @@ const A3: Page = () => (
     aside={
       <>
         <Aside label="Heads up" tone="yellow">
-          A recovery email only resets your password. Only the phrase brings back your old encrypted mail.
+          A recovery email only resets your password. The phrase also brings back your old encrypted mail.
         </Aside>
         <Aside label="Later" tone="dark">
           <span style={{ fontFamily: MONO }}>Settings › Recovery</span>
@@ -1192,9 +1189,9 @@ const A4: Page = () => (
       <>
         <Action n={1}>Install Proton Mail from the Play Store or App Store and sign in.</Action>
         <Action n={2}>
-          Open <Tap>Get more storage</Tap> in the sidebar.
+          In the web inbox at mail.proton.me, open <Tap>Get more storage</Tap> in the left sidebar.
         </Action>
-        <Action n={3}>Tick off the checklist. Free storage goes from 500 MB to 1 GB.</Action>
+        <Action n={3}>Tick off its three tasks, getting the app included. Free storage goes from 500 MB to 1 GB.</Action>
       </>
     }
     aside={
@@ -1251,7 +1248,7 @@ const A6: Page = () => (
     actions={
       <>
         <Action n={1}>
-          Pull in Gmail: <Tap>Settings › Import via Easy Switch › Google</Tap>
+          Pull in Gmail, in a browser: <Tap>Settings › All settings › Import via Easy Switch › Google</Tap>
         </Action>
         <Action n={2}>Each time you log in somewhere, switch its email to Proton or an alias.</Action>
         <Action n={3}>Tonight: tell three people your new address.</Action>
@@ -1337,11 +1334,9 @@ const B2: Page = () => (
     actions={
       <>
         <Action n={1}>Phone: install the app and sign in.</Action>
-        <Action n={2}>
-          Android: search Settings for <Tap>Autofill service</Tap>. Pick your manager.
-        </Action>
+        <Action n={2}>Android: say yes when the app offers autofill. Missed it? Find Autofill in the app's own settings.</Action>
         <Action n={3}>
-          iPhone: <Tap>Settings › General › AutoFill & Passwords</Tap>, then switch it on.
+          iPhone: <Tap>Settings › General › AutoFill & Passwords</Tap>, switch it on, pick your manager.
         </Action>
       </>
     }
@@ -1372,9 +1367,9 @@ const B3: Page = () => (
       <>
         <Action n={1}>Install an authenticator app: Proton Authenticator or Ente Auth.</Action>
         <Action n={2}>
-          In your manager: <Tap>Settings › Two-factor authentication</Tap>, scan the QR.
+          Log in on the web. Bitwarden: <Tap>Settings › Security › Two-step login</Tap>. Proton: <Tap>Account and password › 2FA</Tap>.
         </Action>
-        <Action n={3}>Save the recovery codes with your master password, on paper.</Action>
+        <Action n={3}>Add it to the authenticator. Save the recovery codes on paper, with your master password.</Action>
       </>
     }
     aside={
@@ -1399,10 +1394,10 @@ const B4: Page = () => (
     actions={
       <>
         <Action n={1}>
-          Chrome: <Tap>⋮ › Passwords and autofill › Google Password Manager › Settings › Export</Tap>
+          On a computer, Chrome: <Tap>⋮ › Passwords and autofill › Google Password Manager › Settings › Export</Tap>
         </Action>
         <Action n={2}>
-          Import: Proton Pass <Tap>Settings › Import</Tap>, Bitwarden <Tap>Tools › Import</Tap>
+          Import: Proton Pass extension <Tap>Settings › Import</Tap>, Bitwarden web <Tap>Tools › Import</Tap>
         </Action>
         <Action n={3}>Delete the exported file straight away. Empty the trash too.</Action>
       </>
@@ -1413,7 +1408,7 @@ const B4: Page = () => (
           That file is every password in plain text. Not on venue Wi‑Fi, not in a crowd.
         </Aside>
         <Aside label="Only once" tone="dark">
-          Imports don't de-duplicate. Run it a single time.
+          Bitwarden doesn't de-duplicate imports. Run it a single time.
         </Aside>
       </>
     }
@@ -1492,7 +1487,7 @@ const C1: Page = () => (
           Never share that code with anyone. Not a friend, not “Signal support”.
         </Aside>
         <Aside label="Still stuck?" tone="dark">
-          Check DND isn't blocking service SMS on your number.
+          Turn off any VPN, and let unknown callers ring so “Call me” gets through.
         </Aside>
       </>
     }
@@ -1544,7 +1539,7 @@ const C3: Page = () => (
     actions={
       <>
         <Action n={1}>
-          Tap <Tap>Settings › Profile › Username</Tap>
+          Tap your <Tap>profile photo › your name › @</Tap>
         </Action>
         <Action n={2}>Pick a name plus at least two digits, like chai.42</Action>
         <Action n={3}>Share the username, link or QR instead of your phone number.</Action>
@@ -1800,11 +1795,11 @@ Frame the title: "A lot of privacy content pushes people from zero to 100, and t
 Honest hook for a Bitcoin crowd: "I got into crypto, which led to personal privacy, just to make money." [guest Priv8 2022]`,
   // 2 Hello
   `[0:01] 30 seconds. Opt Out since 2021; COO at Cake Wallet (disclose it: Cake comes up on the money slide).
-Own your lens: "Most of the people I talk to are in the Western world, with less government oppression to actively fight." [OO s1e01] Then, paraphrasing your s1e07 point: it matters to hear from people who grew up with different experiences. The people who care most about privacy are "a lot of the global South… places where people have faced oppression." [guest bitcoin-rails 2026-10]
+Own your lens (paraphrase): a lot of the people you talk to are in the Western world, with less government oppression to actively fight. [OO s1e01] Then, paraphrasing your s1e07 point: it matters to hear from people who grew up with different experiences. The people who care most about privacy are "a lot of the global South… places where people have faced oppression." [guest bitcoin-rails 2026-10]
 Origin story if time: you worked in cybersecurity at Cisco. Cisco built surveillance tech used against the Uyghurs; you didn't work on it and didn't know until it came out. Once you knew, you left. "It really shook me." [guest Expat Money 2024; you confirmed 2026-10-19] Never say you built those tools.`,
   // 3 Plan
-  `[0:02] Set expectations: this is a workshop, not a lecture. Most of the hour is hands-on.
-The vote comes at about the 20-minute mark. Everyone leaves having done at least one real step.`,
+  `[0:02] Set expectations: this is a workshop, not a lecture. Phones stay out the whole time; nearly half the hour is hands-on.
+The warm-up comes at about 0:25 and the vote at about 0:27. Everyone leaves having done at least one real step.`,
   // 4 Icebreaker
   `[0:03] Ask for a show of hands, let the silence land, then reveal.
 "Who reading this is willing to email me all of your passwords and home address?" [blog: comparing-private-spends]
@@ -1817,10 +1812,11 @@ Why it matters: "A lot of ideas, a lot of art gets shut down before it even coul
   // 6 Already out
   `[0:06] Keep it factual. Pick one or two to talk through.
 - CoWIN Telegram bot, June 2023: phone number in, Aadhaar/passport/PAN/DOB out (Newslaundry; govt said CoWIN itself wasn't breached).
-- Star Health, Sep–Oct 2024: 31M customers, 7.24 TB, served via Telegram bots (SC World).
+- Star Health, Sep–Oct 2024: 31M customers, 7.24 TB, served via Telegram bots. Both figures are the HACKER'S CLAIM (xenZen); Reuters couldn't verify them and Star Health disputed a "widespread compromise" (SC World).
 - boAt, Apr 2024: 7.5M customers (TechCrunch).
 - "ICMR"/COVID data, Oct 2023: 81.5 crore records offered for $80k. That figure is the SELLER'S CLAIM; a sample had valid Aadhaar IDs (Business Today).
-DPDP Rules notified 13 Nov 2025; core obligations only from 13 May 2027, and the Data Protection Board was still unstaffed in Aug–Oct 2026 (PIB, LiveLaw).
+Fresher hooks if you want one from this month: SBI, Oct 2026 (CERT-In flagged it 16 Oct; 3,897 customers' records in ~3.75 lakh dark-web rows; IFF says customers weren't told). Bank of Baroda, Jul 2026 (700 GB–1 TB claimed, incl. Aadhaar; bank confirmed one employee mailbox was compromised).
+DPDP Rules notified 13 Nov 2025; core obligations only from 13 May 2027. The Data Protection Board still had no Chairperson or Members as of mid-Oct 2026. Consent Manager rules start 13 Nov 2026 (PIB, LiveLaw).
 Line: "You may not be targeted right now, but that doesn't mean dragnet surveillance isn't effective." [OO s1e08]`,
   // 7 Journey
   `[0:08] Your triad: "What do you want to protect, who do you want to protect it from, and what lengths are you willing to go to?" [guest Litecoin Underground 2022]
@@ -1831,7 +1827,7 @@ Honest moment: you've struggled with burnout and feeling it's futile too. [OO s1
   // 8 Community
   `[0:10] Step 01 in the guide, and the most important one. [blog: privacy-first-steps]
 "If nothing else you get from this, find a good community. Get plugged in." [OO s1e06]
-"Find some community around you that can give you sane tips and sane feedback." [OO s1e12] If a community shames beginners, leave it. [OO s1e01]
+"Find some community around you that can give you sane tips and sane feedback." [OO s1e12] If a community treats beginners like they're stupid, "you need to find new communities." [OO s1e01, your reply to Henry]
 Crowdsourced verification: you can't audit code, but people you trust can. [OO s1e02]
 Local: Internet Freedom Foundation (digital-rights litigation; IFF has tracked the Proton block case) and FOSS United. Have people scan the Privacy 101 Signal group QR now: it's the room's community after today.`,
   // 9 Map divider
@@ -1844,23 +1840,25 @@ Starting with browser and password manager works because they barely change dail
   `[0:13] "On desktop, it's your browser, because most of what you do is in a browser." [guest Litecoin Underground]
 "Just install Brave, import everything, and live your life." [guest Expat Money] "Anything Chrome-compatible works on Brave." [guest Litecoin]
 Brave settings to switch off: brave://settings/web3 (Wallet), brave://settings/leo-ai (Leo), Rewards. Hiding isn't the same as disabling.
-Chrome dropped uBlock Origin (MV2) for good on 31 Aug 2026. Brave hosts uBO itself at brave://settings/extensions/v2.
+Full uBlock Origin (MV2) stopped running in stable Chrome with Chrome 138 (Jul 2025), and Google pulled it from the Chrome Web Store on 31 Aug 2026. Brave hosts uBO itself at brave://settings/extensions/v2.
 Firefox: since the Feb 2025 terms change, LibreWolf is the only Firefox you recommend. Advanced: Mullvad Browser on a computer; Tor Browser when you need anonymity, never for your bank. The Brave settings above are optional, only if asked; your beginner advice is "no extensions, no settings changes".`,
   // 12 Passwords
-  `[0:15] Proton Pass is your current tool; you and your wife used Bitwarden for years. [blog] You switched Enpass → Bitwarden (2021) and later to Proton Pass, and it was fine. [OO s1e04; FTF 13] "Bitwarden and Proton Pass, pick either one." [FTF 13, 2025-09] "There aren't many privacy tools that make your life easier. A password manager is one of them."
-Free tiers: Proton Pass has unlimited logins, 10 aliases and 3 TOTP items. Bitwarden is free and open source, but has no master-password recovery.
+  `[0:15] Proton Pass is your current tool; you and your wife used Bitwarden for years. [blog] You switched Enpass → Bitwarden (2021) and Bitwarden → Proton Pass (2024), and it was fine. [OO s1e04; FTF 13] "Bitwarden and Proton Pass, pick either one." [FTF 13, 2025-09] Paraphrase: there aren't many privacy tools that make your life easier, and a password manager is one of them. [guest Litecoin Underground 2022]
+Free tiers: Proton Pass has unlimited logins and devices, 10 aliases and 2 vaults; built-in 2FA codes now need Pass Plus (proton.me/pass/pricing, Oct 2026). Bitwarden is free and open source, but has no master-password recovery.
 "It can start with something as simple as moving your passwords out of browser sync." [OO s1e03]
 Track B on the ballot.`,
   // 13 Email
   `[0:16] "I'm a Proton Mail user, huge fan. Same vein as Brave and Signal: you can start without too much headache." [guest Expat Money]
 "With Proton Mail you're not paying with your data. On the free option, you're piggybacking off the people who pay." [OO s1e05]
 Aliases: "Normal practice is one email address for literally every account." [OO s2e01] Proton/SimpleLogin aliases fix that. Use them for accounts and newsletters, not for people you talk to.
-Story: Trezor's newsletter list leaked and you got spear-phished on that alias. Lesson: switch an alias off right after you sign up, and turn it back on when you need it. [FTF 22, 2025-12]
-India: Karnataka HC ordered a Proton Mail block (29 Apr 2025); a Division Bench STAYED it 16 Mar 2026. Status after the June 2026 hearing is unverified; check before the talk. It's still on the India App Store.`,
+Story: Trezor's newsletter list leaked and a convincing phish hit that alias. You never clicked, and you switched the alias off the next morning. Lesson: switch an alias off right after you sign up, and turn it back on when you need it. [FTF 22, 2025-12; X 2022-04-03] Don't imply you were compromised.
+India: Karnataka HC ordered a Proton Mail block (29 Apr 2025); a Division Bench STAYED it 16 Mar 2026 "till further orders", and the stay still holds. On 14 Jul 2026 the bench asked the Centre to say on affidavit whether foreign firms can insist on MLAT; the case was listed for 8 Oct 2026 with no reported outcome (LiveLaw). Proton Mail still works and is on the India App Store (Oct 2026).`,
   // 14 Search
   `[0:18] "If everyone's using Google, guess who has a monopoly on the flow of information on the internet?" [OO Kagi ep]
 Brave Search runs its own index. DuckDuckGo is mostly Bing results, without the profile. Kagi is $5–25/mo, USD only.
-Kagi is your own daily search (Ultimate tier since about 2022). Your old caveat: an account ties searches together, which is why you backed away at first. Privacy Pass (Feb 2025) fixes that, but needs the Professional plan or higher. [OO Kagi ep]
+DuckDuckGo: you dropped it in 2022 (its down-ranking, then the Microsoft tracker deal) and still call it "reasonably good" but prefer Brave Search [FTF 20]. It's on the slide only because Safari doesn't offer Brave Search; iPhone users who want better can install the Brave app.
+Kagi is what you use for everything now (you confirmed 2026-10-27), on the Ultimate tier [FTF 20]. Plans: free trial of 100 searches, then Starter $5 (300 searches), Professional $10, Ultimate $25 (kagi.com/pricing). Setup is more than a two-minute job: Android Chrome needs a few searches on kagi.com first, then Settings › Search engine; iPhone Safari needs the "Kagi for Safari" extension. That's why the room's warm-up uses a free engine. You were in the beta from Mar 2022, backed away in Nov 2024 because an account ties searches together [OO Kagi ep], and came back across your devices late 2024. Privacy Pass (Feb 2025) fixes the linking, but needs the Professional plan or higher. You're a paying customer only, no sponsorship (you confirmed 2026-10-23).
+Why pay: ad-funded engines are "incentivized to serve you the results that they're paid to serve rather than the results that you actually need" [OO Kagi ep]; with Kagi "the actual benefit here is that it's paid. So the incentives are aligned." Even good free engines "just do their own ads." [FTF 20] Re-listen before quoting on stage.
 Tee up the warm-up.`,
   // 15 Messaging
   `[0:19] "I have all my friends and family on Signal. I was able to get everyone off of text messages." [guest Expat Money]
@@ -1868,31 +1866,37 @@ Tee up the warm-up.`,
 "Don't fight everyone who doesn't use the messaging app you prefer." [OO s1e08] WhatsApp is everywhere here, so add Signal, don't wage war.
 "Public groups anyone can join? Encryption doesn't matter there." [guest Expat Money] One-to-one and family chats are what to move.
 If asked about SimpleX: you loved the protocol but gave up on it about a year ago (groups, lost messages, notifications). Signal, Telegram for work, and email is all you keep up with now. [FTF 58, 2026-09]
+If asked which app you use: since Jul 2026 your Signal account runs in Radar, Cake's app on Signal's network. Disclose it's your employer's product; recommend Signal itself on stage.
 Family story (cleared 2026-10-19): you were the weirdo who pushed your own family onto Signal. What you'd tell them instead: model it.
-India context (presenter only): DoT SIM-binding directions (Nov 2025, deadline 31 Dec 2026) may force messaging apps to stay bound to the SIM. MeitY sent Signal and Telegram a username notice on 2 Jul 2026; outcome unknown.`,
+India context (presenter only): DoT SIM-binding directions (Nov 2025) take effect 1 Jan 2027 and may force messaging apps to stay bound to the SIM. WhatsApp is testing it in an Android beta; Signal hasn't said anything publicly. MeitY sent WhatsApp, Signal and Telegram notices about username features on 2 Jul 2026; still no public outcome, and IFF and SFLC have asked MeitY to withdraw them. Telegram was blocked nationwide 16–22 Jun 2026 (s.69A, NEET re-exam), and the Delhi HC upheld the block. Apple pulled Bitchat from the India App Store on 3 Oct 2026. New SIMs need a biometric check from about late Nov 2026 (Telecom User Identification Rules, 21 Aug 2026).`,
   // 16 Money
   `[0:21] Disclose: you work at Cake. "Monero is the closest thing we have to digital cash." [OO s1e05] "I didn't understand how valuable cash was until I got into Monero." [OO s1e05]
 "I pay in the most privacy-preserving way, whether it's a sandwich or a coffee." [OO Proton Wallet ep]
 "It protects you and the people you transact with." [OO s1e09]
 Tax question: "I can use Monero for my business, and at tax time reveal transaction details as needed." [OO s1e09] India taxes crypto gains at 30% plus 1% TDS; this isn't tax advice.
 KYC: "The discount you're getting when you're going to that central exchange… is that you're giving them over all of your personally identifiable information." [OO s1e07]
+For Bitcoiners: "Spend Monero, save Bitcoin." Honest caveat (you confirmed 2026-10-23): Monero isn't much use to people who can't spend it directly or convert it to fiat locally. Cold storage on a budget: Cupcake on an old offline phone.
 Bitcoin's 2026 "good enough" bar: no-KYC coins, receive with Silent Payments, send with Payjoin (both in Cake). WazirX lost ~$230M in July 2024: custody risk in one line.
-FIU-IND sent takedown notices (9 Sep 2026) to swap services including ChangeNOW, SimpleSwap, FixedFloat and Guardarian. Mention only if asked.
+FIU-IND sent notices to 15 platforms (9 Sep 2026), including the swaps ChangeNOW, SimpleSwap, FixedFloat and Guardarian, plus WhiteBIT, Pionex, XT.com and WOO X (PMLA s.13 plus IT Act takedowns). Mention only if asked.
+Expect "where do I buy Monero here?": in Jan 2026 the Economic Times reported that FIU told Indian exchanges to stop XMR/ZEC/DASH deposits, withdrawals and trading. There's no official FIU text and the current status is unclear. Point to P2P and to the Cake station; don't promise an on-ramp.
 Point to the Cake onboarding station at Bitmela for hands-on help.`,
   // 17 VPN
   `[0:23] "VPNs were never about anonymity." [OO s1e12] "You're not removing trust, you're shifting trust" from your ISP, mobile carrier, hotel or café Wi-Fi to a provider you chose. [guest Expat Money, OO s1e12]
-Obscura is your pick. It's Carl Dong's VPN (Opt Out, Mar 2025) with a two-party relay: Obscura is the first hop and knows who paid, Mullvad is the exit hop and sees the traffic, and neither sees both. "We literally can't see anything about your internet traffic." (Carl, OO ep). $8/mo, 5 connections, account number with no email, card/Lightning/Monero. iOS, macOS, Android, Windows, and Linux since Sep 2026 (obscura.com/pricing).
+Obscura is your pick. It's Carl Dong's VPN (Opt Out, Mar 2025) with a two-party relay: Obscura is the first hop and knows who paid, Mullvad is the exit hop and sees the traffic, and neither sees both. "We literally can't see anything about your internet traffic." (Carl, OO ep). $8/mo, 5 connections, account number with no email, card/Lightning/Monero. iOS, macOS, Android, Windows, and Linux since Sep 2026, when it also went open source under GPLv3 (obscura.com/pricing).
+You're not paid by Obscura (confirmed 2026-10-23). Why not Proton VPN when you use Proton Mail: "I keep my VPN at a different company from my email." [X 2024-04-10]
 Mullvad is €5/mo flat, no email, cash or XMR. Proton VPN Free has no data cap but random servers.
 India: CERT-In's 2022 directions require VPN providers to keep user identity and IP logs for 5 years. Proton pulled its India servers; "India" now routes via Singapore. Mullvad has no India servers at all. VPN apps have been pulled from Indian stores on MHA/I4C orders (2024–25).`,
   // 18 OS
   `[0:24] "I was a huge Google fanboy, testing every Android version before release." [guest Litecoin]
-GrapheneOS: Pixel 6 and newer; Pixel 8+ recommended for 7 years of updates. Pixel 10a is ₹55,999 on the Google Store India, so be honest that this is a later step for most of the room.
+GrapheneOS: Pixel 8 or newer (7 years of updates) is what it strongly recommends. The Pixel 6/6 Pro reached end of life this month (Oct 2026); the 6a lasts until Jul 2027 and the 7 until Oct 2027 (grapheneos.org/faq). Motorola announced a GrapheneOS partnership at MWC (Mar 2026), with phones expected around 2027. The Pixel 10a is ₹55,999 on the Google Store India after a ₹6,000 price rise in early Oct 2026 (it launched at ₹49,999, and Flipkart sales go lower), so be honest that this is a later step for most of the room.
 "I definitely used to be a hardcore anti-Apple person… primarily it's an iPhone now and a Mac." ADP is the only reason you're OK with that; everyone on an iPhone should turn it on. [FTF 28, 2026-02] You still keep a GrapheneOS phone. Pop!_OS and Zorin are recommendations; don't imply you run Linux daily now.
 Linux: "The one I've settled on and recommend to a lot of people is Pop!_OS." [OO s1e10] Zorin OS is the easiest-looking switch.
 Free tip for budget phones: "The cheaper the hardware, the more preinstalled crap." Uninstall what you don't use. [OO s1e01]`,
   // 19 Warm-up
-  `[0:25] Everyone, 2 minutes. Walk the room. Android Chrome only lists engines you've visited, so open search.brave.com first.
-iOS 18.2+: Settings › Search. Older iOS: Settings › Safari › Search Engine. Brave Search isn't offered in Safari, so DuckDuckGo is the easy pick there.
+  `[0:25] Everyone, 2 minutes. Walk the room. Chrome's built-in list for India is Google, Brave, Bing, Yahoo India, DuckDuckGo, so Brave shows up without visiting it (Chromium regional_settings.json). On an older Chrome that doesn't list it, run one search on search.brave.com, then reopen the setting.
+iOS 18.2 through 27: Settings › Search › Search Engine. iOS 17 and earlier: Settings › Safari › Search Engine. Brave Search isn't offered in Safari, so DuckDuckGo is the easy pick there.
+Brave only documents Brave Search as its default in the US, Canada, UK, France and Germany, so Brave users should check, not assume.
+Say while they tap: "I use Kagi for everything. It's paid, so it's not today's warm-up, but you get 100 free searches to try at home."
 Celebrate: "That's step 06. You're on the map."`,
   // 20 Vote
   `[0:27] Show of hands for A, B or C. Count quickly, majority wins. In a tie, pick C: Signal is the most social and the fastest win.
@@ -1909,17 +1913,19 @@ Username: suggest something not tied to their legal name if they want separation
 Tor or many accounts from one IP may get only email/SMS options. If it's stuck, switch networks or try the app.`,
   // 24 A3
   `The recovery phrase is 12 words. It resets the password AND decrypts old mail.
-A recovery email or SMS only resets the password, so old mail stays unreadable.
+A recovery email or SMS only resets the password, so old mail stays unreadable. (A recovery file or a device data backup can also recover data; the phrase is the one everyone can do on paper today.)
 Don't store the phrase in Proton Drive or Pass.`,
   // 25 A4
   `Free storage starts at 500 MB and becomes 1 GB once the get-started checklist is done within 18 days. Do it now.
+"Get more storage" is documented in the WEB inbox's left sidebar only; it may not be in the mobile app, so send phone users to mail.proton.me in their browser. The three tasks: "Discover privacy features", "Review import options", "Download the app" (proton.me/support/get-started-mail).
 Free plan: 1 address, 150 sends/day, 3 folders + 3 labels, 10 hide-my-email aliases. The desktop app is a trial only on Free; use the web app plus the mobile app.`,
   // 26 A5
   `Aliases come from Proton Pass (free: 10). Free can reply from an alias.
-Your story: 200+ aliases. And the Trezor leak: you got spear-phished on an alias you'd left on, so switch aliases off right after signing up.
+If "+ › Alias" isn't there in someone's app: create a new login, tap Username, then "Hide my email" (that's the route Proton documents for Android and iOS).
+Your story: 200+ aliases. And the Trezor leak: a phish hit an alias you'd left on (you didn't click), so switch aliases off right after signing up.
 "I treat aliases as a way to manage email from accounts I don't directly communicate with." [OO s2e01]`,
   // 27 A6
-  `Easy Switch "Gmail connection": Free can connect 1 Gmail account. The import can use up to 80% of storage, so maybe import only recent mail.
+  `Easy Switch is web only: account.proton.me › Settings › All settings › Import via Easy Switch › Google › Connect to Gmail. No mobile-app path, so phone users do it in a browser. "Gmail connection": Free can connect 1 Gmail account. The import can use up to 80% of storage, so maybe import only recent mail.
 Inactive free accounts are deleted after 12 months with no sign-in.
 Wrap: "That's your 0 → 1." Point early finishers to Track B or C.`,
   // 28 Track B intro
@@ -1930,35 +1936,40 @@ Warn now: the password export happens AT HOME, not in this room.`,
 Proton Pass can use an existing Proton account, or any email.
 Passphrase: 4–6 random words. Never reuse a password from anywhere else.`,
   // 30 B2
-  `Android paths vary by brand, so tell people to search Settings for "Autofill service" (Samsung, Xiaomi, vivo and Oppo all differ).
-iPhone (iOS 18+): Settings › General › AutoFill & Passwords.
+  `Android system paths vary by brand (Android 14+ calls it "Passwords, passkeys & accounts › Preferred service"; Samsung, Xiaomi, vivo and Oppo all differ), so go through the app: Bitwarden Settings › Autofill › Autofill services; Proton Pass asks "Autofill with Proton Pass" at first launch, or Profile › Autofill.
+iPhone (iOS 18 through 27): Settings › General › AutoFill & Passwords, turn on AutoFill Passwords and Passkeys, pick the manager under "AutoFill From".
 Verify by logging out of one site and logging back in with autofill.`,
   // 31 B3
   `Authenticators: Proton Authenticator or Ente Auth. Keep 2FA codes separate from the password manager, and never use SMS 2FA. [FTF 13, 2025-09]
+Neither app turns on 2FA in-app; it's on the web. Bitwarden web vault: Settings › Security › Two-step login › Authenticator app › Manage. Proton: account.proton.me › Settings › All settings › Account and password › Two-factor authentication › Authenticator app.
+On a single phone you can't scan your own screen: use "enter key manually" / copy the setup key into the authenticator.
 Bitwarden detail: without 2FA it emails a code on every new device (since Mar 2025), so 2FA also removes that friction.`,
   // 32 B4
-  `Google export: Chrome ⋮ › Passwords and autofill › Google Password Manager › Settings › Export. Android needs a screen lock. The CSV excludes passkeys.
-Import once only; neither manager de-duplicates. Delete the CSV and empty the trash.`,
+  `Google export, computer: Chrome ⋮ › Passwords and autofill › Google Password Manager › Settings › Export. Android: ⋮ › Settings › Autofill and passwords › Google Password Manager › Settings › Export passwords & passkeys › Download file (needs a screen lock). The CSV holds passwords only; passkeys move app to app.
+Imports: Proton Pass extension ☰ › Settings › Import (iOS: Profile › Import to Proton Pass › Import from Chrome). Bitwarden web Tools › Import; on Android 14+ / iOS 26+ it can also import straight from another app (Settings › Vault › Import items).
+Import once only: Bitwarden says it doesn't check for duplicates (Proton Pass undocumented). Delete the CSV and empty the trash.`,
   // 33 B5
   `Order: email first (it resets everything else), then banking/UPI, then Google/Apple ID and the mobile carrier account.
-"Reused passwords are how one leak becomes ten."`,
+Line: reused passwords are how one leak becomes ten.`,
   // 34 Track C intro
   `TRACK C, ~12 min. Ask who already has Signal: they jump to step 3 (username). Pair new users with existing users for step 6.`,
   // 35 C1
-  `If the SMS doesn't come, tap "Call me" after the countdown. Check DND / blocked service SMS on the SIM.
+  `If the SMS doesn't come, tap "Call me" after the countdown. TRAI DND doesn't block OTPs, so skip that. Signal's own checklist: turn off any VPN; iPhone: check Messages › Unknown Senders and turn off Silence Unknown Callers; check you haven't opted out of transactional texts; after too many attempts, wait before retrying. No 2026 reports of codes failing on Jio or Airtel.
+Signal's Android beta (8.28+) can register without a phone number for a $2.99 one-time fee. Not in stable, so it doesn't change today's flow.
 Never share the code. Account-takeover scams ask for exactly this.`,
   // 36 C2
   `PIN + Registration Lock: Settings › Account. If they forget the PIN with the lock on, they wait up to 7 days. Signal can't reset it.
 Profile name can be a first name or nickname.`,
   // 37 C3
-  `Usernames: 3–32 characters plus at least 2 digits. Shareable as a link or QR, and resettable. Since Feb 2024.
-Presenter context: MeitY sent Signal a notice on usernames on 2 Jul 2026; outcome unknown. Don't dramatise it.`,
+  `Path: Android, tap the profile icon top left (opens Settings); iPhone, profile icon › Settings. Then tap your name › tap @.
+Usernames: 3–32 characters, a–z, 0–9 and _, plus at least 2 digits at the end (chai.42 works). Shareable as a link or QR. Changing it kills the old username, link and QR. Since Feb 2024 (support.signal.org, updated 30 Jul 2026).
+Presenter context: MeitY sent username notices to WhatsApp (1 Jul) and to Signal and Telegram (2 Jul 2026); still no public outcome. Don't dramatise it.`,
   // 38 C4
   `"Who can see my number" defaults to Nobody. "Who can find me by number" defaults to Everybody; Nobody needs see=Nobody first.
 Set these before blocking anyone. For family onboarding, leaving "find me" on is fine.`,
   // 39 C5
   `Settings › Privacy › Default timer for new chats. It applies to new chats only; existing chats are set individually.
-"Less history stored means less to lose."`,
+Line: less history stored means less to lose.`,
   // 40 C6
   `Join the Privacy 101 Signal group first (QR on screen), then swap usernames with neighbours. Fun moment.
 "I don't think people realize how easy it is to use Signal calls to replace phone calls." [OO s1e09] Try a quick call too.`,
