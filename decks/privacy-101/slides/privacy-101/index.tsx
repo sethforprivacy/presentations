@@ -843,7 +843,7 @@ const Passwords: Page = () => (
         Clean, free plan with unlimited passwords, plus email aliases built in.
       </ToolCard>
       <ToolCard name="Bitwarden" tag="Open-source classic">
-        What my wife and I used for years. Audited, cross-platform, can be self-hosted.
+        What my family used for years. Audited, cross-platform, can be self-hosted.
       </ToolCard>
       <ToolCard name="KeePassXC" tag="Power users only">
         Respected, free and offline. No built-in sync, which is a deal-breaker for me.
@@ -871,7 +871,7 @@ const Email: Page = () => (
         Encrypted email from Germany. People I trust swear by it.
       </ToolCard>
       <ToolCard name="Aliases" tag="Step 05" tagColor={YELLOW}>
-        A different address for every account. Leaked or spammy? Switch that one off. I have 200+.
+        A different address for every account. Leaked or spammy? Switch that one off. I have 653.
       </ToolCard>
     </CardRow>
     <Takeaway>
@@ -1232,7 +1232,7 @@ const A5: Page = () => (
           One address everywhere links all your accounts together. Aliases break the chain.
         </Aside>
         <Aside label="Free plan" tone="white">
-          10 aliases. I have more than 200 across my accounts.
+          10 aliases. I have 653 across my accounts.
         </Aside>
       </>
     }
@@ -1794,7 +1794,7 @@ export const notes: (string | undefined)[] = [
 Frame the title: "A lot of privacy content pushes people from zero to 100, and they never take a good first step." [OO s1e05 Justin] Then, in your own framing: today is zero to one.
 Honest hook for a Bitcoin crowd: "I got into crypto, which led to personal privacy, just to make money." [guest Priv8 2022]`,
   // 2 Hello
-  `[0:01] 30 seconds. Opt Out since 2021; COO at Cake Wallet (disclose it: Cake comes up on the money slide).
+  `[0:01] 30 seconds. Opt Out since 2021; COO at Cake Wallet (disclose it: Cake comes up on the money slide). If someone quotes your Nostr bio ("VP of Operations"): it's stale, you don't use Nostr.
 Own your lens (paraphrase): a lot of the people you talk to are in the Western world, with less government oppression to actively fight. [OO s1e01] Then, paraphrasing your s1e07 point: it matters to hear from people who grew up with different experiences. The people who care most about privacy are "a lot of the global South… places where people have faced oppression." [guest bitcoin-rails 2026-10]
 Origin story if time: you worked in cybersecurity at Cisco. Cisco built surveillance tech used against the Uyghurs; you didn't work on it and didn't know until it came out. Once you knew, you left. "It really shook me." [guest Expat Money 2024; you confirmed 2026-10-19] Never say you built those tools.`,
   // 3 Plan
@@ -1843,7 +1843,7 @@ Brave settings to switch off: brave://settings/web3 (Wallet), brave://settings/l
 Full uBlock Origin (MV2) stopped running in stable Chrome with Chrome 138 (Jul 2025), and Google pulled it from the Chrome Web Store on 31 Aug 2026. Brave hosts uBO itself at brave://settings/extensions/v2.
 Firefox: since the Feb 2025 terms change, LibreWolf is the only Firefox you recommend. Advanced: Mullvad Browser on a computer; Tor Browser when you need anonymity, never for your bank. The Brave settings above are optional, only if asked; your beginner advice is "no extensions, no settings changes".`,
   // 12 Passwords
-  `[0:15] Proton Pass is your current tool; you and your wife used Bitwarden for years. [blog] You switched Enpass → Bitwarden (2021) and Bitwarden → Proton Pass (2024), and it was fine. [OO s1e04; FTF 13] "Bitwarden and Proton Pass, pick either one." [FTF 13, 2025-09] Paraphrase: there aren't many privacy tools that make your life easier, and a password manager is one of them. [guest Litecoin Underground 2022]
+  `[0:15] Proton Pass is your current tool; your family used Bitwarden for years. [blog] Say "my family" on stage (your call, 2026-10-27). You switched Enpass → Bitwarden (2021) and Bitwarden → Proton Pass (2024), and it was fine. [OO s1e04; FTF 13] "Bitwarden and Proton Pass, pick either one." [FTF 13, 2025-09] Paraphrase: there aren't many privacy tools that make your life easier, and a password manager is one of them. [guest Litecoin Underground 2022]
 Free tiers: Proton Pass has unlimited logins and devices, 10 aliases and 2 vaults; built-in 2FA codes now need Pass Plus (proton.me/pass/pricing, Oct 2026). Bitwarden is free and open source, but has no master-password recovery.
 "It can start with something as simple as moving your passwords out of browser sync." [OO s1e03]
 Track B on the ballot.`,
@@ -1922,7 +1922,7 @@ Free plan: 1 address, 150 sends/day, 3 folders + 3 labels, 10 hide-my-email alia
   // 26 A5
   `Aliases come from Proton Pass (free: 10). Free can reply from an alias.
 If "+ › Alias" isn't there in someone's app: create a new login, tap Username, then "Hide my email" (that's the route Proton documents for Android and iOS).
-Your story: 200+ aliases. And the Trezor leak: a phish hit an alias you'd left on (you didn't click), so switch aliases off right after signing up.
+Your story: 653 aliases (your count, 2026-10-27; the guide still says "over 200"). And the Trezor leak: a phish hit an alias you'd left on (you didn't click), so switch aliases off right after signing up.
 "I treat aliases as a way to manage email from accounts I don't directly communicate with." [OO s2e01]`,
   // 27 A6
   `Easy Switch is web only: account.proton.me › Settings › All settings › Import via Easy Switch › Google › Connect to Gmail. No mobile-app path, so phone users do it in a browser. "Gmail connection": Free can connect 1 Gmail account. The import can use up to 80% of storage, so maybe import only recent mail.
