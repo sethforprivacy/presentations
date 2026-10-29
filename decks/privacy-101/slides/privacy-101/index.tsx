@@ -10,13 +10,12 @@ import { Step, Steps, useSlidePageNumber } from '@open-slide/core';
 import cakeLogo from './assets/brand/cake-horizontal-fondant.svg';
 import cakeLogoMono from './assets/brand/cake-horizontal-mono-fondant.svg';
 import cakeMark from './assets/brand/cake-mark-fondant.svg';
-import optOutLogo from './assets/optout/opt-out_logo_circle.png';
 import sethPhoto from './assets/people/seth.png';
 import qrFirstSteps from './assets/qr/first-steps.svg';
 import qrProton from './assets/qr/proton.svg';
 import qrPass from './assets/qr/pass.svg';
 import qrBitwarden from './assets/qr/bitwarden.svg';
-import qrSignal from './assets/qr/signal.svg';
+import qrRadar from './assets/qr/radar.svg';
 import qrOptOut from './assets/qr/optout.svg';
 import qrSignalGroup from './assets/qr/signal-group.svg';
 import groupLogo from './assets/signal/signal-group-logo-512.png';
@@ -323,17 +322,18 @@ const QrCard = ({ src, label, size = 260 }: { src: string; label: string; size?:
   </div>
 );
 
-// The workshop's own Signal group: logo + join QR. Used on Community, Track C's finish line and Resources.
-const GroupCard = ({ size = 280 }: { size?: number }) => (
+// The workshop's own group (on Signal's network, so it opens in Radar or Signal): logo + join QR.
+// Used on Community, Track C's finish line and Resources.
+const GroupCard = ({ size = 400 }: { size?: number }) => (
   <div style={{ background: WHITE, borderRadius: 'var(--osd-radius)', padding: 28, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18 }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: 18, alignSelf: 'stretch' }}>
       <img src={groupLogo} alt="" style={{ width: 72, height: 72, borderRadius: '50%', display: 'block' }} />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <span style={{ fontSize: 30, fontWeight: 700, letterSpacing: '-0.01em' }}>Privacy 101</span>
-        <span style={{ fontFamily: MONO, fontSize: 22, color: MUTED }}>Signal group · scan to join</span>
+        <span style={{ fontFamily: MONO, fontSize: 22, color: MUTED }}>Radar or Signal · scan to join</span>
       </div>
     </div>
-    <img src={qrSignalGroup} alt="Signal group invite QR" style={{ width: size, height: size, display: 'block' }} />
+    <img src={qrSignalGroup} alt="Privacy 101 group invite QR" style={{ width: size, height: size, display: 'block' }} />
   </div>
 );
 
@@ -350,7 +350,38 @@ const StepEyebrow = ({ n, label, color = BLUE }: { n: string; label: string; col
   </Eyebrow>
 );
 
-const ToolCard = ({ name, tag, children, tagColor = BLUE, highlight = false }: { name: string; tag: string; children: ReactNode; tagColor?: string; highlight?: boolean }) => (
+// How hard a tool is to adopt: filled dots out of three.
+const LEVELS = { easy: ['Easy', 1], medium: ['Medium', 2], advanced: ['Advanced', 3] } as const;
+const Level = ({ level }: { level: keyof typeof LEVELS }) => {
+  const [label, n] = LEVELS[level];
+  return (
+    <span style={{ display: 'flex', alignItems: 'center', gap: 10, fontFamily: MONO, fontSize: 22, color: MUTED }}>
+      <span style={{ display: 'flex', gap: 5 }}>
+        {[1, 2, 3].map((i) => (
+          <span key={i} style={{ width: 14, height: 14, borderRadius: '50%', background: i <= n ? FONDANT : 'transparent', border: `2px solid ${FONDANT}`, boxSizing: 'border-box' }} />
+        ))}
+      </span>
+      {label}
+    </span>
+  );
+};
+
+// `highlight` marks Seth's own pick on a step page (thick Fondant border + offset shadow, yellow tag).
+const ToolCard = ({
+  name,
+  tag,
+  children,
+  tagColor = BLUE,
+  highlight = false,
+  level,
+}: {
+  name: string;
+  tag: string;
+  children: ReactNode;
+  tagColor?: string;
+  highlight?: boolean;
+  level?: keyof typeof LEVELS;
+}) => (
   <div
     style={{
       flex: 1,
@@ -364,9 +395,10 @@ const ToolCard = ({ name, tag, children, tagColor = BLUE, highlight = false }: {
       gap: 18,
     }}
   >
-    <span style={{ alignSelf: 'flex-start', background: tagColor, borderRadius: 999, padding: '6px 18px', fontFamily: MONO, fontSize: 24 }}>
-      {tag}
-    </span>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+      <span style={{ background: highlight ? YELLOW : tagColor, borderRadius: 999, padding: '6px 18px', fontFamily: MONO, fontSize: 24 }}>{tag}</span>
+      {level && <Level level={level} />}
+    </div>
     <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.1 }}>{name}</div>
     <div style={{ fontSize: 31, lineHeight: 1.42, color: MUTED }}>{children}</div>
   </div>
@@ -520,16 +552,13 @@ const Cover: Page = () => (
       <span>Jaipur · 30–31 October 2026</span>
     </Eyebrow>
     <h1 style={{ ...HEAD, position: 'absolute', left: PAD_X, top: 270, fontSize: 'var(--osd-size-hero)', lineHeight: 1 }}>Privacy 101</h1>
-    <div style={{ ...HEAD, position: 'absolute', left: PAD_X, top: 470, fontSize: 116, fontWeight: 600 }}>
-      From 0 to <Em>1</Em>.
-    </div>
-    <p style={{ position: 'absolute', left: PAD_X, top: 670, width: 900, margin: 0, fontSize: 40, lineHeight: 1.45, color: MUTED }}>
+    <p style={{ position: 'absolute', left: PAD_X, top: 500, width: 900, margin: 0, fontSize: 40, lineHeight: 1.45, color: MUTED }}>
       A hands-on workshop. Phone out, battery charged, mobile data on.
     </p>
     <div style={{ position: 'absolute', left: PAD_X, bottom: 96, display: 'flex', alignItems: 'center', gap: 32 }}>
       <img src={cakeLogo} alt="Cake Wallet" style={{ height: 52, display: 'block' }} />
       <span style={{ width: 2, height: 44, background: RULE }} />
-      <img src={optOutLogo} alt="Opt Out" style={{ height: 56, width: 56, borderRadius: '50%', display: 'block' }} />
+      <img src={sethPhoto} alt="" style={{ height: 64, width: 64, borderRadius: '50%', objectFit: 'cover', display: 'block' }} />
       <span style={{ fontSize: 30, fontWeight: 600 }}>Seth For Privacy</span>
     </div>
   </div>
@@ -572,16 +601,16 @@ const AgendaRow = ({ n, label, mins, accent = BLUE }: { n: string; label: ReactN
 
 const Plan: Page = () => (
   <div style={root}>
-    <Eyebrow>Our 55 minutes</Eyebrow>
+    <Eyebrow>55 minutes</Eyebrow>
     <Title>
-      Less talking. More <Em>doing</Em>.
+      The <Em>plan</Em>
     </Title>
     <div style={{ position: 'absolute', left: PAD_X, top: 330, width: 1680 }}>
-      <AgendaRow n="1" label="Why bother?" mins="10 min" />
-      <AgendaRow n="2" label="The map: 11 steps from 0 to 1" mins="12 min" />
-      <AgendaRow n="3" label="Warm-up: everyone, right now" mins="3 min" accent={YELLOW} />
-      <AgendaRow n="4" label="You vote. We do one step together." mins="20 min" accent={YELLOW} />
-      <AgendaRow n="5" label="Your next 30 days + questions" mins="10 min" />
+      <AgendaRow n="1" label="Why privacy" mins="10 min" />
+      <AgendaRow n="2" label="The 11 steps" mins="12 min" />
+      <AgendaRow n="3" label="Warm-up: search engine" mins="3 min" accent={YELLOW} />
+      <AgendaRow n="4" label="Hands-on: one step, your pick" mins="20 min" accent={YELLOW} />
+      <AgendaRow n="5" label="Next 30 days + Q&A" mins="10 min" />
     </div>
     <Footer />
   </div>
@@ -717,12 +746,12 @@ const Community: Page = () => (
       The most important step isn't technical. Find people who'll answer the “dumb” questions and keep you going.
     </p>
     <div style={{ position: 'absolute', left: PAD_X, top: 420, width: 1080, display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <CommunityCard name="Our Signal group">Made for today. Keep asking, keep helping each other after Bitmela.</CommunityCard>
+      <CommunityCard name="Our Privacy 101 group">Made for today, in Radar or Signal. Keep asking, keep helping each other after Bitmela.</CommunityCard>
       <CommunityCard name="Internet Freedom Foundation · FOSS United">India's digital-rights and free-software communities.</CommunityCard>
       <CommunityCard name="The people in this room">Swap usernames before you leave. That's your first privacy circle.</CommunityCard>
     </div>
-    <div style={{ position: 'absolute', right: PAD_X, top: 300 }}>
-      <GroupCard size={330} />
+    <div style={{ position: 'absolute', right: PAD_X, top: 280 }}>
+      <GroupCard size={470} />
     </div>
     <Footer />
   </div>
@@ -814,14 +843,14 @@ const Browser: Page = () => (
       Browse without being <Em>followed</Em>.
     </Title>
     <CardRow top={330}>
-      <ToolCard name="Brave" tag="Easiest switch">
-        Blocks ads and trackers out of the box, on phone and computer. Import from Chrome and get on with life.
+      <ToolCard name="Brave" tag="Every device" highlight level="easy">
+        What I use. Blocks ads and trackers out of the box. Import from Chrome and get on with life.
       </ToolCard>
-      <ToolCard name="LibreWolf" tag="Computer">
+      <ToolCard name="LibreWolf" tag="Computer" level="medium">
         A pre-hardened Firefox. Strong defaults, uBlock Origin included, no tuning needed.
       </ToolCard>
-      <ToolCard name="Mullvad Browser" tag="Someday">
-        The hardcore option, computer only. Use it unchanged so you look like everyone else.
+      <ToolCard name="Mullvad Browser" tag="Computer" level="advanced">
+        The hardcore option. Use it unchanged so you look like everyone else.
       </ToolCard>
     </CardRow>
     <Takeaway tone="plain">
@@ -839,7 +868,7 @@ const Passwords: Page = () => (
       Remember <Em>one</Em>. Make the rest unique.
     </Title>
     <CardRow top={330}>
-      <ToolCard name="Proton Pass" tag="What I use now">
+      <ToolCard name="Proton Pass" tag="What I use" highlight>
         Clean, free plan with unlimited passwords, plus email aliases built in.
       </ToolCard>
       <ToolCard name="Bitwarden" tag="Open-source classic">
@@ -864,7 +893,7 @@ const Email: Page = () => (
       An inbox that isn't <Em>reading</Em> you.
     </Title>
     <CardRow top={330}>
-      <ToolCard name="Proton Mail" tag="My inbox">
+      <ToolCard name="Proton Mail" tag="What I use" highlight>
         What I use for all my email. Free plan, no phone number, encrypted end to end between Proton users.
       </ToolCard>
       <ToolCard name="Tuta" tag="Also great">
@@ -914,11 +943,11 @@ const Messaging: Page = () => (
       Talk <Em>freely</Em>.
     </Title>
     <CardRow top={330}>
-      <ToolCard name="Signal" tag="Start here" tagColor={YELLOW}>
-        End-to-end encrypted by default, easy to get family onto. A username keeps your number private.
+      <ToolCard name="Radar" tag="What I use" highlight>
+        Signal's network and encryption, plus Bitcoin payments. Made by the Cake team. Plain Signal works too.
       </ToolCard>
       <ToolCard name="WhatsApp & Telegram" tag="Keep for groups" tagColor={YELLOW}>
-        Fine for big public groups. Move one-to-one and family chats to Signal. Don't fight about it.
+        Fine for big public groups. Move one-to-one and family chats to Radar. Don't fight about it.
       </ToolCard>
       <ToolCard name="Your people" tag="The hard part" tagColor={YELLOW}>
         “A messenger app with no people to message is just pointless.” Bring two of yours over.
@@ -926,7 +955,7 @@ const Messaging: Page = () => (
     </CardRow>
     <Takeaway>
       <Chip bg={FONDANT} fg={ICING}>Ballot C</Chip>
-      Signal from scratch, number hidden, in about 12 minutes.
+      Radar from scratch, number hidden, in about 12 minutes.
     </Takeaway>
     <Footer />
   </div>
@@ -939,7 +968,7 @@ const Money: Page = () => (
       Your money <Em>talks</Em> too.
     </Title>
     <CardRow top={330}>
-      <ToolCard name="Monero" tag="Private by default" tagColor={YELLOW}>
+      <ToolCard name="Monero" tag="My pick" highlight>
         Hides sender, receiver and amount for everyone, whichever wallet you use. Digital cash as it should be.
       </ToolCard>
       <ToolCard name="Bitcoin, privately" tag="Mind the trail" tagColor={YELLOW}>
@@ -989,7 +1018,7 @@ const Os: Page = () => (
       The <Em>foundation</Em>, when you're ready.
     </Title>
     <CardRow top={330}>
-      <ToolCard name="GrapheneOS" tag="Phone" tagColor={ORANGE}>
+      <ToolCard name="GrapheneOS" tag="Best phone OS" highlight>
         Hardened Android without Google watching. Pixel-only for now; Pixel 8 or newer is best.
       </ToolCard>
       <ToolCard name="On an iPhone?" tag="Phone" tagColor={ORANGE}>
@@ -1067,7 +1096,7 @@ const Vote: Page = () => (
     <div style={{ position: 'absolute', left: PAD_X, right: PAD_X, top: 340, display: 'flex', gap: 36 }}>
       <BallotCard letter="A" name="Proton Mail + your first alias" leave="A private inbox, a saved recovery phrase, and one alias." mins="~15 min" />
       <BallotCard letter="B" name="A password manager" leave="A vault with autofill on, 2FA, and a plan for your top three logins." mins="~15 min" />
-      <BallotCard letter="C" name="Signal, from scratch" leave="Signal set up, number hidden, a username to share." mins="~12 min" />
+      <BallotCard letter="C" name="Radar, from scratch" leave="Radar set up, number hidden, a username to share." mins="~12 min" />
     </div>
     <p style={{ position: 'absolute', left: PAD_X, top: 896, margin: 0, fontSize: 32, fontWeight: 500 }}>
       Finish early? Every track's QR code is in the deck. Start another.
@@ -1142,7 +1171,7 @@ const A2: Page = () => (
           Proton fights spam accounts. Fifty sign-ups from one room trips the alarm.
         </Aside>
         <Aside label="Privacy note" tone="white">
-          Proton keeps only a scrambled hash of the email you verify with.
+          The verification email is only kept as a hash. A recovery email is kept as-is and has gone to police before.
         </Aside>
       </>
     }
@@ -1247,11 +1276,9 @@ const A6: Page = () => (
     title="Move in, one account at a time."
     actions={
       <>
-        <Action n={1}>
-          Pull in Gmail, in a browser: <Tap>Settings › All settings › Import via Easy Switch › Google</Tap>
-        </Action>
-        <Action n={2}>Each time you log in somewhere, switch its email to Proton or an alias.</Action>
-        <Action n={3}>Tonight: tell three people your new address.</Action>
+        <Action n={1}>Each time you log in somewhere, switch its email to Proton or an alias.</Action>
+        <Action n={2}>Start with the accounts that matter most: your bank, UPI and phone carrier.</Action>
+        <Action n={3}>Leave Gmail running while you move. Less lands there every week.</Action>
       </>
     }
     aside={
@@ -1285,9 +1312,9 @@ const TrackB: Page = () => (
       </>
     }
     qr={
-      <div style={{ display: 'flex', gap: 24 }}>
-        <QrCard src={qrPass} label="Proton Pass" size={260} />
-        <QrCard src={qrBitwarden} label="Bitwarden" size={260} />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <QrCard src={qrPass} label="Proton Pass" size={240} />
+        <QrCard src={qrBitwarden} label="Bitwarden" size={240} />
       </div>
     }
   />
@@ -1445,36 +1472,36 @@ const B5: Page = () => (
   />
 );
 
-/* ── Track C: Signal from scratch ─────────────────────── */
+/* ── Track C: Radar from scratch (Signal's network; plain Signal works too) ── */
 
 const TrackC: Page = () => (
   <TrackIntro
     letter="C"
     name={
       <>
-        Signal, from <Em on="blue">scratch</Em>
+        Radar, from <Em on="blue">scratch</Em>
       </>
     }
     facts={
       <>
         <Fact label="Time">About 12 minutes</Fact>
-        <Fact label="Have Signal?">Skip to step 3, the username. Everyone ends in the same place.</Fact>
-        <Fact label="You leave with">Signal set up, your number hidden, a username to share.</Fact>
+        <Fact label="Have Signal?">Keep it today and skip to step 3. Move into Radar at home, from a Signal backup.</Fact>
+        <Fact label="You leave with">Radar set up, your number hidden, a username to share.</Fact>
       </>
     }
-    qr={<QrCard src={qrSignal} label="signal.org/download" size={330} />}
+    qr={<QrCard src={qrRadar} label="radar.chat/install" size={330} />}
   />
 );
 
 const C1: Page = () => (
   <DoIt
-    track="Track C · Signal"
+    track="Track C · Radar"
     step={1}
     total={6}
     title="Install and verify."
     actions={
       <>
-        <Action n={1}>Get Signal from signal.org/download or your app store. Watch for lookalikes.</Action>
+        <Action n={1}>Get Radar from radar.chat/install or your app store. Watch for lookalikes.</Action>
         <Action n={2}>Enter your phone number, then the 6-digit code from the SMS.</Action>
         <Action n={3}>
           No SMS once the timer runs out? Tap <Tap>Call me</Tap>.
@@ -1484,7 +1511,7 @@ const C1: Page = () => (
     aside={
       <>
         <Aside label="Heads up" tone="yellow">
-          Never share that code with anyone. Not a friend, not “Signal support”.
+          Never share that code with anyone. Not a friend, not “Radar support”.
         </Aside>
         <Aside label="Still stuck?" tone="dark">
           Turn off any VPN, and let unknown callers ring so “Call me” gets through.
@@ -1496,7 +1523,7 @@ const C1: Page = () => (
 
 const C2: Page = () => (
   <DoIt
-    track="Track C · Signal"
+    track="Track C · Radar"
     step={2}
     total={6}
     title={
@@ -1516,7 +1543,7 @@ const C2: Page = () => (
     aside={
       <>
         <Aside label="Why the lock" tone="dark">
-          Someone who steals your SIM can't take over your Signal without the PIN.
+          Someone who steals your SIM can't take over your account without the PIN.
         </Aside>
         <Aside label="Heads up" tone="yellow">
           Forget the PIN with the lock on, and you wait up to 7 days.
@@ -1528,7 +1555,7 @@ const C2: Page = () => (
 
 const C3: Page = () => (
   <DoIt
-    track="Track C · Signal"
+    track="Track C · Radar"
     step={3}
     total={6}
     title={
@@ -1547,8 +1574,8 @@ const C3: Page = () => (
     }
     aside={
       <>
-        <Aside label="Already had Signal?" tone="white">
-          Welcome in. Start here.
+        <Aside label="Already on Signal?" tone="white">
+          Start here, in Signal. At home: <span style={{ fontFamily: MONO }}>Settings › Backups</span>, save the key, then restore it in Radar.
         </Aside>
         <Aside label="Flexible" tone="dark">
           Change or delete it any time. Old links stop working.
@@ -1560,7 +1587,7 @@ const C3: Page = () => (
 
 const C4: Page = () => (
   <DoIt
-    track="Track C · Signal"
+    track="Track C · Radar"
     step={4}
     total={6}
     title={
@@ -1587,7 +1614,7 @@ const C4: Page = () => (
           Set this before you block anyone. Blocking doesn't hide a number they've already seen.
         </Aside>
         <Aside label="Your call" tone="dark">
-          New to Signal and bringing family? Leave “find me” on for now.
+          Just joined and bringing family? Leave “find me” on for now.
         </Aside>
       </>
     }
@@ -1596,7 +1623,7 @@ const C4: Page = () => (
 
 const C5: Page = () => (
   <DoIt
-    track="Track C · Signal"
+    track="Track C · Radar"
     step={5}
     total={6}
     title={
@@ -1628,7 +1655,7 @@ const C5: Page = () => (
 
 const C6: Page = () => (
   <DoIt
-    track="Track C · Signal"
+    track="Track C · Radar"
     step={6}
     total={6}
     title={
@@ -1645,10 +1672,7 @@ const C6: Page = () => (
     }
     aside={
       <>
-        <GroupCard size={260} />
-        <Aside label="Done ✓" tone="yellow">
-          Step 07 on the map: your 0 → 1.
-        </Aside>
+        <GroupCard size={480} />
       </>
     }
   />
@@ -1754,7 +1778,7 @@ const Resources: Page = () => (
     <CardRow top={300}>
       <ResourceCard src={qrFirstSteps} name="Privacy first steps" url="sethforprivacy.com" />
       <ResourceCard src={qrOptOut} name="Opt Out podcast" url="optoutpod.com" />
-      <ResourceCard src={qrSignalGroup} name="Privacy 101 group" url="Signal · scan to join" />
+      <ResourceCard src={qrSignalGroup} name="Privacy 101 group" url="Radar or Signal" />
       <ResourceCard src={qrCake} name="Cake Wallet" url="cakewallet.com" />
     </CardRow>
     <Footer />
@@ -1829,7 +1853,7 @@ Honest moment: you've struggled with burnout and feeling it's futile too. [OO s1
 "If nothing else you get from this, find a good community. Get plugged in." [OO s1e06]
 "Find some community around you that can give you sane tips and sane feedback." [OO s1e12] If a community treats beginners like they're stupid, "you need to find new communities." [OO s1e01, your reply to Henry]
 Crowdsourced verification: you can't audit code, but people you trust can. [OO s1e02]
-Local: Internet Freedom Foundation (digital-rights litigation; IFF has tracked the Proton block case) and FOSS United. Have people scan the Privacy 101 Signal group QR now: it's the room's community after today.`,
+Local: Internet Freedom Foundation (digital-rights litigation; IFF has tracked the Proton block case) and FOSS United. Have people scan the Privacy 101 group QR now: it's the room's community after today. It's a Signal group, so it opens in Radar or Signal.`,
   // 9 Map divider
   `[0:12] Transition. Eleven steps, from privacy-first-steps, in the order you'd take them starting over today.`,
   // 10 Map
@@ -1863,10 +1887,11 @@ Tee up the warm-up.`,
   // 15 Messaging
   `[0:19] "I have all my friends and family on Signal. I was able to get everyone off of text messages." [guest Expat Money]
 "A messenger app with no people to message is just pointless." [guest Expat Money]
-"Don't fight everyone who doesn't use the messaging app you prefer." [OO s1e08] WhatsApp is everywhere here, so add Signal, don't wage war.
+"Don't fight everyone who doesn't use the messaging app you prefer." [OO s1e08] WhatsApp is everywhere here, so add Radar, don't wage war.
 "Public groups anyone can join? Encryption doesn't matter there." [guest Expat Money] One-to-one and family chats are what to move.
 If asked about SimpleX: you loved the protocol but gave up on it about a year ago (groups, lost messages, notifications). Signal, Telegram for work, and email is all you keep up with now. [FTF 58, 2026-09]
-If asked which app you use: since Jul 2026 your Signal account runs in Radar, Cake's app on Signal's network. Disclose it's your employer's product; recommend Signal itself on stage.
+Radar is the pick on stage (your call, 2026-10-29), with plain Signal as the alternative. Since Jul 2026 your own Signal account runs in Radar. DISCLOSE: it's built by the Cake Wallet team. Pitch: Signal's network and encryption, so Signal contacts come with you, plus self-custodial Bitcoin (Lightning) payments in the chat. Free, no ads, open source (AGPLv3). On the India App Store and Play Store; Android also via GitHub APK or Obtainium (radar.chat/install).
+If asked: a phone number is still needed (Signal's network). Radar and Signal users chat with each other normally. Radar isn't affiliated with Signal Messenger LLC. The wallet seed backup is prompted once you hold a balance.
 Family story (cleared 2026-10-19): you were the weirdo who pushed your own family onto Signal. What you'd tell them instead: model it.
 India context (presenter only): DoT SIM-binding directions (Nov 2025) take effect 1 Jan 2027 and may force messaging apps to stay bound to the SIM. WhatsApp is testing it in an Android beta; Signal hasn't said anything publicly. MeitY sent WhatsApp, Signal and Telegram notices about username features on 2 Jul 2026; still no public outcome, and IFF and SFLC have asked MeitY to withdraw them. Telegram was blocked nationwide 16–22 Jun 2026 (s.69A, NEET re-exam), and the Delhi HC upheld the block. Apple pulled Bitchat from the India App Store on 3 Oct 2026. New SIMs need a biometric check from about late Nov 2026 (Telecom User Identification Rules, 21 Aug 2026).`,
   // 16 Money
@@ -1899,7 +1924,7 @@ Brave only documents Brave Search as its default in the US, Canada, UK, France a
 Say while they tap: "I use Kagi for everything. It's paid, so it's not today's warm-up, but you get 100 free searches to try at home."
 Celebrate: "That's step 06. You're on the map."`,
   // 20 Vote
-  `[0:27] Show of hands for A, B or C. Count quickly, majority wins. In a tie, pick C: Signal is the most social and the fastest win.
+  `[0:27] Show of hands for A, B or C. Count quickly, majority wins. In a tie, pick C: Radar is the most social and the fastest win.
 Jump straight to the winning track: A is page 21, B is page 28, C is page 34. Tell early finishers the other tracks' QR codes are on their intro slides.`,
   // 21 Track A intro
   `TRACK A, ~15 min. Ask people to put pen and paper out for the recovery phrase.
@@ -1909,7 +1934,8 @@ Test beforehand: open proton.me on venue Wi-Fi AND on Jio/Airtel.`,
   `No phone number needed: CAPTCHA or an email code is enough. Free domains are @proton.me or @protonmail.com; @pm.me is paid-only now.
 Username: suggest something not tied to their legal name if they want separation.`,
   // 23 A2
-  `Human verification options are CAPTCHA, an email code, or SMS. Proton keeps only a hash of the email or number.
+  `Human verification options are CAPTCHA, an email code, or SMS. Proton keeps only a hash of the verification email or number.
+The RECOVERY email is different: it's stored as-is. In 2024 Proton gave a user's recovery email (an iCloud address) to Swiss authorities in a Spanish terrorism case, and Apple's records then identified a Catalan activist (TechCrunch, 8 May 2024). Proton's line: privacy by default, not anonymity by default. If someone needs separation, use the recovery phrase and skip the recovery email, or use an alias.
 Tor or many accounts from one IP may get only email/SMS options. If it's stuck, switch networks or try the app.`,
   // 24 A3
   `The recovery phrase is 12 words. It resets the password AND decrypts old mail.
@@ -1925,7 +1951,8 @@ If "+ › Alias" isn't there in someone's app: create a new login, tap Username,
 Your story: 653 aliases (your count, 2026-10-27; the guide still says "over 200"). And the Trezor leak: a phish hit an alias you'd left on (you didn't click), so switch aliases off right after signing up.
 "I treat aliases as a way to manage email from accounts I don't directly communicate with." [OO s2e01]`,
   // 27 A6
-  `Easy Switch is web only: account.proton.me › Settings › All settings › Import via Easy Switch › Google › Connect to Gmail. No mobile-app path, so phone users do it in a browser. "Gmail connection": Free can connect 1 Gmail account. The import can use up to 80% of storage, so maybe import only recent mail.
+  `The slide is about moving accounts over as you log in; the Gmail import is a mention only, if asked.
+Easy Switch is web only: account.proton.me › Settings › All settings › Import via Easy Switch › Google › Connect to Gmail. No mobile-app path, so phone users do it in a browser. "Gmail connection": Free can connect 1 Gmail account. The import can use up to 80% of storage, so maybe import only recent mail.
 Inactive free accounts are deleted after 12 months with no sign-in.
 Wrap: "That's your 0 → 1." Point early finishers to Track B or C.`,
   // 28 Track B intro
@@ -1952,13 +1979,17 @@ Import once only: Bitwarden says it doesn't check for duplicates (Proton Pass un
   `Order: email first (it resets everything else), then banking/UPI, then Google/Apple ID and the mobile carrier account.
 Line: reused passwords are how one leak becomes ten.`,
   // 34 Track C intro
-  `TRACK C, ~12 min. Ask who already has Signal: they jump to step 3 (username). Pair new users with existing users for step 6.`,
+  `TRACK C, ~12 min. New people install Radar (QR goes to radar.chat/install, which picks the right store). Prefer plain Signal? Same steps, same network.
+Ask who already has Signal: they keep it TODAY and jump to step 3 (username). Don't move accounts in the room: registering the same number in Radar takes the account off their Signal app.
+Moving to Radar, at home: in Signal, Settings › Backups › Set up › Enable Backups; save the 64-character recovery key (password manager or paper); free plan = all text + last 45 days of media; let one backup finish. Then install Radar, and at "Restore or transfer" pick "From Signal Backups" and enter the key. View-once messages and anything due to disappear within 24 hours aren't backed up. (support.signal.org "Signal Secure Backups", updated 14 Oct 2026.) Linked-device mode exists but is for power users; you recommend moving the account.
+Pair new users with existing users for step 6.`,
   // 35 C1
   `If the SMS doesn't come, tap "Call me" after the countdown. TRAI DND doesn't block OTPs, so skip that. Signal's own checklist: turn off any VPN; iPhone: check Messages › Unknown Senders and turn off Silence Unknown Callers; check you haven't opted out of transactional texts; after too many attempts, wait before retrying. No 2026 reports of codes failing on Jio or Airtel.
+Radar uses Signal's registration, so the same SMS / "Call me" flow and the same troubleshooting apply (checked against Radar's Android source, not on a device).
 Signal's Android beta (8.28+) can register without a phone number for a $2.99 one-time fee. Not in stable, so it doesn't change today's flow.
 Never share the code. Account-takeover scams ask for exactly this.`,
   // 36 C2
-  `PIN + Registration Lock: Settings › Account. If they forget the PIN with the lock on, they wait up to 7 days. Signal can't reset it.
+  `PIN + Registration Lock: Settings › Account. If they forget the PIN with the lock on, they wait up to 7 days. Nobody can reset it, not Radar and not Signal.
 Profile name can be a first name or nickname.`,
   // 37 C3
   `Path: Android, tap the profile icon top left (opens Settings); iPhone, profile icon › Settings. Then tap your name › tap @.
@@ -1971,7 +2002,7 @@ Set these before blocking anyone. For family onboarding, leaving "find me" on is
   `Settings › Privacy › Default timer for new chats. It applies to new chats only; existing chats are set individually.
 Line: less history stored means less to lose.`,
   // 40 C6
-  `Join the Privacy 101 Signal group first (QR on screen), then swap usernames with neighbours. Fun moment.
+  `Join the Privacy 101 group first (QR on screen; it opens in Radar or Signal), then swap usernames with neighbours. Fun moment. Then: "That's step 07 on the map, your 0 → 1."
 "I don't think people realize how easy it is to use Signal calls to replace phone calls." [OO s1e09] Try a quick call too.`,
   // 41 Done
   `[0:47] Celebrate. "The most important thing is that people take that first step, and then figure out if there's a further step." [guest Expat Money]`,
@@ -1983,7 +2014,7 @@ The slides stay online for the other tracks. Week 4: Cake onboarding station or 
 2: Burnout leads to cynicism; resist it. [OO s1e12]
 3: "Modeling can prompt people to want to learn more. Conversation is often not how we change minds." [OO s1e12] And: "Familiar conversations with people who trust you pull them down the rabbit hole, not some privacy advocate." [OO s1e01]`,
   // 44 Resources
-  `[0:51] Leave this up during Q&A so people can scan. Privacy first steps, Opt Out, the Privacy 101 Signal group, Cake Wallet.`,
+  `[0:51] Leave this up during Q&A so people can scan. Privacy first steps, Opt Out, the Privacy 101 group (Radar or Signal), Cake Wallet.`,
   // 45 Close
   `[0:52] Close on your Opt Out sign-off: "Now get out there and opt out this week." [every Opt Out outro]
 If you want the identity line: "I very intentionally call myself a freedom tech maximalist, not a Bitcoin maximalist… not a Monero maximalist." [EthCC 2026-03; re-listen before quoting]
