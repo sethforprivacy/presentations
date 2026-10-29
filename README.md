@@ -14,6 +14,7 @@ Talks given by Seth For Privacy ([sethforprivacy.com](https://sethforprivacy.com
 | [Putting the punk back in solarpunk](<./Putting the punk back in solarpunk.pdf>) | EthCC 2026 | Cake Wallet deck on solarpunk as an ethos: what "solarpunk" means, its darker-side questions ("larpunk?"), and finding the nuance between techno-optimism and punk self-reliance. |
 | [Spark and Ark: the good, the bad, and the ugly](<./Spark and Ark.pptx>) *(PowerPoint)* | BTC Prague 2026 | Head-to-head of the Ark and Spark Bitcoin L2s (VTXOs, expiry, finality, privacy, operator trust) evaluated from the perspective of a mobile-only, mostly-offline wallet user. |
 | [Run It Yourself - Why Local AI Matters](<./Run It Yourself - Why Local AI Matters.pdf>) | Upcoming talk | open-slide deck on why to run AI locally: the pace of open model releases, shrinking cloud-plan limits, and hardware tiers (MacBook → RTX 3090 → DGX Spark → Mac Studio → workstation) with measured tokens/sec vs. cloud APIs. Source: [`decks/local-ai-matters`](./decks/local-ai-matters). |
+| AI That Never Leaves Your Laptop *(open-slide, in progress)* | Bitmela 2026 (Jaipur) | 15–20 minute re-cut of *Run It Yourself* for an Indian audience, in the Privacy 101 / Cake visual theme: why renting AI bites (India plan prices, shrinking limits), self-custody for your intelligence, the July–October open-weight timeline, and three model tiers (Qwen 3.8-27B, Qwen 3.8 Flash Next, DeepSeek V4.1 Flash 1017) tied to hardware with measured tok/s and India prices in ₹. Source: [`decks/local-ai-matters`](./decks/local-ai-matters) (slide `local-ai-bitmela`). |
 | Privacy 101 — From 0 to 1 *(open-slide, in progress)* | Bitmela 2026 (Jaipur) | Hands-on Cake Wallet × Opt Out workshop following the privacy-first-steps guide: why privacy, the 11-step map, a search-engine warm-up, then the room votes on one live track (Proton Mail + alias, a password manager, or Signal from scratch). Source: [`decks/privacy-101`](./decks/privacy-101). |
 
 ## Source decks (`decks/`)
@@ -22,7 +23,7 @@ Each open-slide project is a fully self-contained workspace (own `package.json`,
 
 Every push to `main` deploys all decks to GitHub Pages: [sethforprivacy.github.io/presentations](https://sethforprivacy.github.io/presentations/). Each deck is served at `/presentations/s/<slide-id>/`, with a short link at `/presentations/<slide-id>/` (e.g. [`/presentations/privacy-101/`](https://sethforprivacy.github.io/presentations/privacy-101/)), so slide ids must be unique across workspaces.
 
-- [`decks/local-ai-matters`](./decks/local-ai-matters) — source for **Run It Yourself - Why Local AI Matters**
+- [`decks/local-ai-matters`](./decks/local-ai-matters) — source for **Run It Yourself - Why Local AI Matters** (slide `local-ai-matters`) and its Bitmela re-cut **AI That Never Leaves Your Laptop** (slide `local-ai-bitmela`)
 - [`decks/privacy-101`](./decks/privacy-101) — source for **Privacy 101 — From 0 to 1** (Bitmela 2026, Jaipur)
 
 Working in any project:
